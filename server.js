@@ -37,12 +37,12 @@ app.use(session({
 }));
 
 
-const client = new Client({
-    connectionString: process.env.DB_HOST,
-    ssl: true,
-});
-
-client.connect();
+// const client = new Client({
+//     connectionString: process.env.DB_HOST,
+//     ssl: true,
+// });
+//
+// client.connect();
 
 
 // app.use(idAndName);
