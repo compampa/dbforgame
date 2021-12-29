@@ -35,6 +35,12 @@ app.use(session({
     cookie: {secure: false},
     name: 'myAuth',
 }));
+const client = new Client({
+    connectionString: process.env.DB_HOST,
+    ssl: true,
+});
+
+client.connect();
 // app.use(idAndName);
 // app.use(userCheck);
 
