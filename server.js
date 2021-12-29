@@ -20,7 +20,7 @@ const PORT = process.env.PORT ?? 3000;
 app.set('view engine', 'hbs');
 hbs.registerHelper('checkId', (idpostuser, idsession) => idpostuser === idsession);
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
@@ -29,7 +29,7 @@ app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false },
+    cookie: {secure: false},
     name: 'myAuth',
 }));
 // app.use(idAndName);
@@ -41,5 +41,5 @@ app.use('/', router);
 // app.use('/post', postRouter);
 
 app.listen(PORT, () => {
-    console.log('-------------------here we go-------------------');
+    console.log(`-------------------here we go on ${PORT}-------------------`);
 });
