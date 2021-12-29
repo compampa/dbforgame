@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 
 router.get('/', async (req, res) => {
-    res.send('OK')
+        res.json({message: 'OK'})
     }
 );
 module.exports = router
