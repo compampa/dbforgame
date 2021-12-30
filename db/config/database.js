@@ -26,5 +26,6 @@ module.exports = {
         dialectOptions: {
             ssl: {rejectUnauthorized: false},
         },
+        "use_env_variable": "DATABASE_URL",
     },
 };
