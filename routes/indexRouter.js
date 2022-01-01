@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Character, Class, User} = require('../db/models')
+const {Character, Class, User, Items} = require('../db/models')
 
 router.get('/', async (req, res) => {
         res.json({message: 'OK'})
