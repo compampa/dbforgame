@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
         class_name: DataTypes.STRING,
         str: DataTypes.INTEGER,
         agl: DataTypes.INTEGER,
-        int: DataTypes.INTEGER
+        int: DataTypes.INTEGER,
+        img: DataTypes.STRING
     }, {
         sequelize,
         modelName: 'Class',

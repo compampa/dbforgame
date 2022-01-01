@@ -17,5 +17,9 @@ router.get('/get-classes', async (req, res) => {
     const classes = await Class.findAll()
     res.json(classes)
 })
+router.get('/get-armor', async (req, res) => {
+    const armor = await Items.findAll()
+    res.json(armor)
+})
 
 module.exports = router
