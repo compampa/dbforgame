@@ -25,9 +25,6 @@ const cors = require('cors');
 
 
 const router = require('./routes/indexRouter');
-// const userRouter = require('./routes/user');
-// const registerRouter = require('./routes/register');
-// const postRouter = require('./routes/post');
 
 const app = express();
 
