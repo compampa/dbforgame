@@ -17,7 +17,6 @@ module.exports = {
                 nickname: 'John_Doe',
                 class_id: 1,
                 lvl: 10,
-                equip_set: 1,
                 balance: 100,
                 avatar: 'link',
                 createdAt: new Date(),

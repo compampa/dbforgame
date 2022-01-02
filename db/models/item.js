@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             this.belongsToMany(models.Character, {through: "Inventories", foreignKey: "item_id"})
+            this.hasOne(models.EquipSet, {foreignKey: "weapon_id"})
             // this.belongsToMany(models.Parameter, {through: "Grades"})
         }
     }

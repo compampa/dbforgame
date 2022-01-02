@@ -1,45 +1,33 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('Characters', {
+        await queryInterface.createTable('EquipSets', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            user_id: {
+            armor_set_id: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: "Users",
+                    model: "ArmorSets",
                     key: "id"
                 }
             },
-            nickname: {
-                type: Sequelize.STRING
-            },
-            class_id: {
+            accessory_set_id: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: "Classes",
+                    model: "AccessorySets",
                     key: "id"
                 }
             },
-            lvl: {
-                type: Sequelize.INTEGER
-            },
-            equip_set: {
+            weapon_id: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: "EquipSets",
+                    model: "Items",
                     key: "id"
                 }
-            },
-            balance: {
-                type: Sequelize.INTEGER
-            },
-            avatar: {
-                type: Sequelize.STRING
             },
             createdAt: {
                 allowNull: false,
@@ -52,6 +40,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('Characters');
+        await queryInterface.dropTable('EquipSets');
     }
 };

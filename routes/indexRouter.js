@@ -22,7 +22,7 @@ router.get('/get-armor', async (req, res) => {
     res.json(armor)
 })
 router.get('/get-specific-inventory', async (req, res) => {
-    const thing = await Inventory.findAll({where: {character_id: 1}, raw: true})
+    const thing = await Inventory.findAll({where: {character_id: 1}, raw: true}) // change id to req.params
     // getting all items id from inventory
     const arr_items_id = thing.map(e => e.item_id)
     let result = []

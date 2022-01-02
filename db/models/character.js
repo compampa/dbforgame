@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             this.belongsTo(models.User, {foreignKey: "user_id"})
             this.belongsTo(models.Class, {foreignKey: "class_id"})
             this.belongsToMany(models.Items, {through: "Inventories", foreignKey: "character_id"})
+            this.hasOne(models.EquipSet, {foreignKey: "equip_set"})
         }
     }
 
