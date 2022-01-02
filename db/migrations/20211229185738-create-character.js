@@ -28,13 +28,13 @@ module.exports = {
             lvl: {
                 type: Sequelize.INTEGER
             },
-            equip_set: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: "EquipSets",
-                    key: "id"
-                }
-            },
+            // equip_set: {
+            //     type: Sequelize.INTEGER,
+            //     references: {
+            //         model: "EquipSets",
+            //         key: "id"
+            //     }
+            // },
             balance: {
                 type: Sequelize.INTEGER
             },

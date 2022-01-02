@@ -13,7 +13,9 @@ module.exports = (sequelize, DataTypes) => {
             this.belongsTo(models.User, {foreignKey: "user_id"})
             this.belongsTo(models.Class, {foreignKey: "class_id"})
             this.belongsToMany(models.Items, {through: "Inventories", foreignKey: "character_id"})
-            this.hasOne(models.EquipSet, {foreignKey: "equip_set"})
+            // this.hasOne(models.EquipSet, {foreignKey: "equip_set"})
+            // this.belongsTo(models.EquipSet, {foreignKey: "character_id"})
+            this.belongsToMany(models.Items, {through: "Equipment", foreignKey: "character_id"})
         }
     }
 
@@ -22,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         nickname: DataTypes.STRING,
         class_id: DataTypes.INTEGER,
         lvl: DataTypes.INTEGER,
-        equip_set: DataTypes.INTEGER,
+        // equip_set: DataTypes.INTEGER,
         balance: DataTypes.INTEGER,
         avatar: DataTypes.STRING
     }, {
