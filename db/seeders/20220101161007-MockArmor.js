@@ -13,6 +13,7 @@ module.exports = {
          */
         await queryInterface.bulkInsert('Items', [
             {
+                grade_id: 2,
                 item_name: "Warrior's helmet",
                 type: 'head',
                 info: 'description',
@@ -21,6 +22,7 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
+                grade_id: 1,
                 item_name: "Warrior's plate",
                 type: 'body',
                 info: 'description',
@@ -29,6 +31,7 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
+                grade_id: 3,
                 item_name: "Warrior's boots",
                 type: 'legs',
                 info: 'description',
@@ -37,6 +40,7 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
+                grade_id: 4,
                 item_name: "Assassin's mask",
                 type: 'head',
                 info: 'description',
@@ -45,6 +49,7 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
+                grade_id: 5,
                 item_name: "Assassin's cuirass",
                 type: 'body',
                 info: 'description',
@@ -53,6 +58,7 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
+                grade_id: 6,
                 item_name: "Assassin's boots",
                 type: 'legs',
                 info: 'description',
@@ -61,6 +67,7 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
+                grade_id: 7,
                 item_name: "Monk's hood",
                 type: 'head',
                 info: 'description',
@@ -69,6 +76,7 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
+                grade_id: 8,
                 item_name: "Monk's mantle",
                 type: 'body',
                 info: 'description',
@@ -77,6 +85,7 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
+                grade_id: 9,
                 item_name: "Monk's boots",
                 type: 'legs',
                 info: 'description',

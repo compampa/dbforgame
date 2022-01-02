@@ -11,12 +11,13 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             this.belongsToMany(models.Character, {through: "Inventories", foreignKey: "item_id"})
-            this.belongsToMany(models.Parameter, {through: "Grades"})
+            // this.belongsToMany(models.Parameter, {through: "Grades"})
         }
     }
 
     Items.init({
         item_name: DataTypes.STRING,
+        grade_id: DataTypes.INTEGER,
         type: DataTypes.STRING,
         info: DataTypes.STRING,
         img: DataTypes.STRING

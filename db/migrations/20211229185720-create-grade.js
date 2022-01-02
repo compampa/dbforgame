@@ -11,13 +11,6 @@ module.exports = {
             title: {
                 type: Sequelize.STRING
             },
-            item_id: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: "Items",
-                    key: "id"
-                }
-            },
             stat_id: {
                 type: Sequelize.INTEGER,
                 references: {
