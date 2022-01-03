@@ -82,8 +82,8 @@ router.get('/get-specific-equipment/:id', async (req, res) => {
     for (let i = 0; i < accParams.length; i += 1) {
         accParamsRaw.push(await Parameter.findByPk(accParams[i], {raw: true}))
     }
-    const accessories_set = [...accRaw]
-    accessories_set.map((e, i) => {
+    const accessoriesSet = [...accRaw]
+    accessoriesSet.map((e, i) => {
         e.grade = accGradesRaw[i].title
         e.stats = accParamsRaw[i]
         delete e.stats.id
@@ -91,6 +91,23 @@ router.get('/get-specific-equipment/:id', async (req, res) => {
         delete e.stats.updatedAt
         delete e.createdAt
         delete e.updatedAt
+    })
+    const accessories_set = {
+        necklace: {},
+        ring: {},
+        sphere: {}
+    }
+    accessoriesSet.map(e => {
+        if (e.type === 'ring') {
+            accessories_set.ring = e
+            return e
+        } else if (e.type === 'sphere') {
+            accessories_set.sphere = e
+            return e
+        } else if (e.type === 'necklace') {
+            accessories_set.necklace = e
+            return e
+        }
     })
 
     // building Armor set
@@ -109,8 +126,8 @@ router.get('/get-specific-equipment/:id', async (req, res) => {
     for (let i = 0; i < armorParams.length; i += 1) {
         armorParamsRaw.push(await Parameter.findByPk(armorParams[i], {raw: true}))
     }
-    const armor_set = [...armorRaw]
-    armor_set.map((e, i) => {
+    const armorSet = [...armorRaw]
+    armorSet.map((e, i) => {
         e.grade = armorGradesRaw[i].title
         e.stats = armorParamsRaw[i]
         delete e.stats.id
@@ -119,6 +136,24 @@ router.get('/get-specific-equipment/:id', async (req, res) => {
         delete e.createdAt
         delete e.updatedAt
     })
+    const armor_set = {
+        helmet: {},
+        plate: {},
+        boots: {}
+    }
+    armorSet.map(e => {
+        if (e.type === 'head') {
+            armor_set.helmet = e
+            return e
+        } else if (e.type === 'body') {
+            armor_set.plate = e
+            return e
+        } else if (e.type === 'legs') {
+            armor_set.boots = e
+            return e
+        }
+    })
+    console.log(armor_set)
 
     // building Weapon
     const weapRaw = await Items.findAll({
@@ -131,7 +166,7 @@ router.get('/get-specific-equipment/:id', async (req, res) => {
         const weapGrade = await Grade.findByPk(weapGrades[i], {raw: true})
         weapGradesRaw.push(weapGrade)
     }
-    console.log(weapGradesRaw)
+    // console.log(weapGradesRaw)
     const weapParams = weapGradesRaw.map(e => e.stat_id)
     const weapParamsRaw = []
     for (let i = 0; i < weapParams.length; i += 1) {
@@ -147,7 +182,7 @@ router.get('/get-specific-equipment/:id', async (req, res) => {
         delete e.createdAt
         delete e.updatedAt
     })
-    console.log(weapon)
+    // console.log(weapon)
     return res.json({armor_set, accessories_set, weapon})
 })
 
