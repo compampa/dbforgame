@@ -56,10 +56,11 @@ router.get('/get-specific-inventory', async (req, res) => {
     res.json(result)
 })
 
-router.get('/get-specific-equipment', async (req, res) => {
-    const equipment = await Equipment.findAll({where: {character_id: 1}, raw: true})
+router.get('/get-specific-equipment/:id', async (req, res) => {
+    const equipment = await Equipment.findAll({where: {character_id: req.params.id}, raw: true})
 
     const itemsId = equipment.map(e => e.item_id)
+    console.log('ITEMS IDS', itemsId)
     const result = []
     for (let i = 0; i < itemsId.length; i += 1) {
         const item = await Items.findOne({where: {id: itemsId[i]}, raw: true})

@@ -72,6 +72,12 @@ module.exports = {
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
+            {
+                title: 'common',
+                stat_id: 11,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            },
         ], {});
     },
 

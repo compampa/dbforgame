@@ -21,6 +21,16 @@ module.exports = {
                 exp: 5,
                 createdAt: new Date(),
                 updatedAt: new Date()
+            },
+            {
+                user_id: 2,
+                nickname: 'Marry_Doe',
+                // class_id: 1,
+                // lvl: 10,
+                balance: 100,
+                exp: 5,
+                createdAt: new Date(),
+                updatedAt: new Date()
             }
         ], {});
     },

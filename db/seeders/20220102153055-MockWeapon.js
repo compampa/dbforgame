@@ -22,7 +22,7 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
-                grade_id: 1,
+                grade_id: 11,
                 item_name: "Assassin Knife",
                 type: "weapon",
                 info: "description",
