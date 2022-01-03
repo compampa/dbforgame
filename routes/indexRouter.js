@@ -60,7 +60,7 @@ router.get('/get-specific-equipment/:id', async (req, res) => {
     const equipment = await Equipment.findAll({where: {character_id: req.params.id}, raw: true})
 
     const itemsId = equipment.map(e => e.item_id)
-    console.log('ITEMS IDS', itemsId)
+    // console.log('ITEMS IDS', itemsId)
     const result = []
     for (let i = 0; i < itemsId.length; i += 1) {
         const item = await Items.findOne({where: {id: itemsId[i]}, raw: true})
@@ -92,20 +92,26 @@ router.get('/get-specific-equipment/:id', async (req, res) => {
         delete e.createdAt
         delete e.updatedAt
     })
-    const accessories_set = {
-        necklace: {},
-        ring: {},
-        sphere: {}
-    }
+
+    const accessories_set = [
+        {
+            necklace: {}
+        },
+        {
+            ring: {}
+        },
+        {
+            sphere: {}
+        }]
     accessoriesSet.map(e => {
         if (e.type === 'ring') {
-            accessories_set.ring = e
+            accessories_set[1].ring = e
             return e
         } else if (e.type === 'sphere') {
-            accessories_set.sphere = e
+            accessories_set[2].sphere = e
             return e
         } else if (e.type === 'necklace') {
-            accessories_set.necklace = e
+            accessories_set[0].necklace = e
             return e
         }
     })
