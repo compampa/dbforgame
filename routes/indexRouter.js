@@ -148,7 +148,7 @@ router.get('/get-specific-equipment/:id', async (req, res) => {
         delete e.updatedAt
     })
     console.log(weapon)
-    res.json({armor_set, accessories_set, weapon})
+    return res.json({armor_set, accessories_set, weapon})
 })
 
 module.exports = router
