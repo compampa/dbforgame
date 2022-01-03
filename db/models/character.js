@@ -11,10 +11,9 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             this.belongsTo(models.User, {foreignKey: "user_id"})
-            this.belongsTo(models.Class, {foreignKey: "class_id"})
+            // this.belongsTo(models.Class, {foreignKey: "class_id"})
+            this.hasOne(models.PlayerClass, {foreignKey: "class_id"})
             this.belongsToMany(models.Items, {through: "Inventories", foreignKey: "character_id"})
-            // this.hasOne(models.EquipSet, {foreignKey: "equip_set"})
-            // this.belongsTo(models.EquipSet, {foreignKey: "character_id"})
             this.belongsToMany(models.Items, {through: "Equipment", foreignKey: "character_id"})
         }
     }
@@ -23,10 +22,10 @@ module.exports = (sequelize, DataTypes) => {
         user_id: DataTypes.INTEGER,
         nickname: DataTypes.STRING,
         class_id: DataTypes.INTEGER,
-        lvl: DataTypes.INTEGER,
+        // lvl: DataTypes.INTEGER,
         // equip_set: DataTypes.INTEGER,
         balance: DataTypes.INTEGER,
-        avatar: DataTypes.STRING
+        exp: DataTypes.STRING
     }, {
         sequelize,
         modelName: 'Character',

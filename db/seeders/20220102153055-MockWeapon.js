@@ -13,7 +13,7 @@ module.exports = {
          */
         await queryInterface.bulkInsert('Items', [
             {
-                grade_id: 1,
+                grade_id: 10,
                 item_name: "Warrior Axe",
                 type: "weapon",
                 info: "description",

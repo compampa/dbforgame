@@ -130,6 +130,7 @@ router.get('/get-specific-equipment', async (req, res) => {
         const weapGrade = await Grade.findByPk(weapGrades[i], {raw: true})
         weapGradesRaw.push(weapGrade)
     }
+    console.log(weapGradesRaw)
     const weapParams = weapGradesRaw.map(e => e.stat_id)
     const weapParamsRaw = []
     for (let i = 0; i < weapParams.length; i += 1) {
@@ -137,38 +138,15 @@ router.get('/get-specific-equipment', async (req, res) => {
     }
     const weapon = [...weapRaw]
     weapon.map((e, i) => {
-        e.grade = armorGradesRaw[i].title
-        e.stats = armorParamsRaw[i]
+        e.grade = weapGradesRaw[i].title
+        e.stats = weapParamsRaw[i]
         delete e.stats.id
         delete e.stats.createdAt
         delete e.stats.updatedAt
         delete e.createdAt
         delete e.updatedAt
     })
-
-    const itemsGrades = result.map(e => e.grade_id)
-    const grades = []
-    for (let i = 0; i < itemsGrades.length; i += 1) {
-        const grade = await Grade.findOne({where: {id: itemsGrades[i]}, raw: true})
-        grades.push(grade)
-    }
-
-    const params = grades.map(e => e.stat_id)
-    const itemStats = []
-    for (let i = 0; i < params.length; i += 1) {
-        itemStats.push(await Parameter.findByPk(params[i], {raw: true}))
-    }
-
-    result.map((e, i) => {
-        e.stats = itemStats[i]
-        e.grade = grades[i].title
-        delete e.stats.id
-        delete e.stats.createdAt
-        delete e.stats.updatedAt
-        delete e.createdAt
-        delete e.updatedAt
-        return e
-    })
+    console.log(weapon)
     res.json({armor_set, accessories_set, weapon})
 })
 

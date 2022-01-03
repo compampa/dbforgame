@@ -1,45 +1,33 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('Characters', {
+        await queryInterface.createTable('ClassesAdjs', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            user_id: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: "Users",
-                    key: "id"
-                }
-            },
-            nickname: {
-                type: Sequelize.STRING
-            },
-            class_id: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: "PlayerClasses",
-                    key: "id"
-                }
-            },
-            // lvl: {
-            //     type: Sequelize.INTEGER
-            // },
-            // equip_set: {
+            // player_class_id: {
             //     type: Sequelize.INTEGER,
             //     references: {
-            //         model: "EquipSets",
+            //         model: "PlayerClasses",
             //         key: "id"
             //     }
             // },
-            balance: {
-                type: Sequelize.INTEGER
+            lvl_id: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: "LVLs",
+                    key: "id"
+                }
             },
-            exp: {
-                type: Sequelize.STRING
+            character_id: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: "Characters",
+                    key: "id"
+                }
             },
             createdAt: {
                 allowNull: false,
@@ -52,6 +40,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('Characters');
+        await queryInterface.dropTable('ClassesAdjs');
     }
 };
