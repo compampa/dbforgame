@@ -11,15 +11,15 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.hasOne(models.PlayerStats, {foreignKey: "player_stats_id"})
-            this.belongsTo(models.Character, {foreignKey: "class_id"})
+            this.belongsToMany(models.Character, {through: "Classes", foreignKey: "player_class_id"})
+            this.belongsTo(models.CharacterStats, {foreignKey: "stats_id"})
 
         }
     }
 
     PlayerClass.init({
         class: DataTypes.STRING,
-        player_stats_id: DataTypes.INTEGER,
+        stats_id: DataTypes.INTEGER,
         description: DataTypes.STRING
     }, {
         sequelize,

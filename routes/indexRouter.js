@@ -1,6 +1,10 @@
 const router = require('express').Router();
 const {Op} = require('sequelize')
-const {Character, Class, User, Items, Grade, Inventory, Parameter, Equipment} = require('../db/models')
+const {
+    Character, Class, User, Items,
+    Grade, Inventory, Parameter,
+    Equipment, PlayerClass, Classes, CharacterStats, LEVELS
+} = require('../db/models')
 
 router.get('/', async (req, res) => {
         res.json({message: 'OK'})
@@ -190,6 +194,25 @@ router.get('/get-specific-equipment/:id', async (req, res) => {
     })
     // console.log(weapon)
     return res.json({armor_set, accessories_set, weapon, total_stats})
+})
+
+router.get('/get-character-stats/:id', async (req, res) => {
+    try {
+        const character = await Character.findByPk(req.params.id, {raw: true})
+        const playerClassId = await Classes.findOne({where: {character_id: character.id}, raw: true})
+        const playerClass = await PlayerClass.findByPk(playerClassId.player_class_id, {
+            attributes: ['stats_id'],
+            raw: true
+        })
+        console.log(playerClass.stats_id);
+        const playerStats = await CharacterStats.findOne({where: {id: playerClass.stats_id}, raw: true})
+        console.log(playerStats);
+        const level = await LEVELS.findAll({where: {exp: {[Op.gt]: Number(character.exp)}}, raw: true})
+        console.log("LEVEEEEEEEL!!!!", level[0].value - 1)
+        res.json(playerStats)
+    } catch (e) {
+        console.log(e);
+    }
 })
 
 module.exports = router

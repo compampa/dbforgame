@@ -1,33 +1,25 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('ClassesAdjs', {
+        await queryInterface.createTable('PlayerClasses', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            // player_class_id: {
-            //     type: Sequelize.INTEGER,
-            //     references: {
-            //         model: "PlayerClasses",
-            //         key: "id"
-            //     }
-            // },
-            lvl_id: {
+            class: {
+                type: Sequelize.STRING
+            },
+            stats_id: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: "LVLs",
+                    model: "CharacterStats",
                     key: "id"
                 }
             },
-            character_id: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: "Characters",
-                    key: "id"
-                }
+            description: {
+                type: Sequelize.STRING
             },
             createdAt: {
                 allowNull: false,
@@ -40,6 +32,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('ClassesAdjs');
+        await queryInterface.dropTable('PlayerClasses');
     }
 };
