@@ -63,7 +63,18 @@ router.get('/ready-for-fun/:id', async (req, res) => {
         const armor_set = await getArmorSet(itemsId)
         const weapon = await getWeapon(itemsId)
         const total_stats = await getCharacterStatsFull(req.params.id, itemsId)
-        return res.json({armor_set, accessories_set, weapon, total_stats})
+        const nickName = total_stats.nickname
+        const lvl = total_stats.lvl
+        const exp = total_stats.exp
+        const hp = total_stats.hp
+        const mp = total_stats.mp
+        const ap = total_stats.ap
+        const playerClass = total_stats.class
+        const avatar = total_stats.avatar
+        return res.json({
+            armor_set, accessories_set, weapon, total_stats, nickName,
+            lvl, exp, hp, mp, ap, playerClass, avatar
+        })
     } catch (e) {
         console.log(e);
     }
