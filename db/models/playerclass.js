@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
 
     PlayerClass.init({
         class: DataTypes.STRING,
-        // stats_id: DataTypes.INTEGER,
+        img: DataTypes.STRING,
         description: DataTypes.STRING
     }, {
         sequelize,

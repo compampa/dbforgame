@@ -355,6 +355,11 @@ router.get('/ready-for-fun/:id', async (req, res) => {
     }
     // console.log(totalStat);
     const total_stats = {
+        nickname: character.nickname,
+        class: playerClass.class,
+        lvl: currentLevel,
+        exp: character.exp,
+        avatar: playerClass.img,
         str: currentStatsRaw.str,
         agl: currentStatsRaw.agl,
         int: currentStatsRaw.int,

@@ -15,21 +15,21 @@ module.exports = {
             {
                 class: 'warrior',
                 description: 'mighty warrior',
-                // stats_id: 1,
+                img: '/image-link',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
             {
                 class: 'assassin',
                 description: 'freaky assassin',
-                // stats_id: 11,
+                img: '/image-link',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
             {
                 class: 'monk',
                 description: 'patient adjascent monk',
-                // stats_id: 21,
+                img: '/image-link',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
