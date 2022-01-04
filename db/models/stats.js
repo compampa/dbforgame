@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.hasOne(models.PlayerClass, {foreignKey: "stats_id"})
+            // this.hasOne(models.PlayerClass, {foreignKey: "stats_id"})
+            this.hasOne(models.CurrentCondition, {foreignKey: "stats_id"})
         }
     }
 
@@ -24,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
         dmg: DataTypes.INTEGER,
         hp: DataTypes.INTEGER,
         mp: DataTypes.INTEGER,
-        ap: DataTypes.INTEGER
+        ap: DataTypes.INTEGER,
+        desc: DataTypes.STRING
     }, {
         sequelize,
         modelName: 'CharacterStats',

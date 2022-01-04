@@ -31,7 +31,7 @@ module.exports = {
                 updatedAt: new Date()
             },
             {
-                grade_id: 1,
+                grade_id: 12,
                 item_name: "Monks Staff",
                 type: "weapon",
                 info: "description",

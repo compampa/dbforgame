@@ -11,13 +11,13 @@ module.exports = {
             class: {
                 type: Sequelize.STRING
             },
-            stats_id: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: "CharacterStats",
-                    key: "id"
-                }
-            },
+            // stats_id: {
+            //     type: Sequelize.INTEGER,
+            //     references: {
+            //         model: "CharacterStats",
+            //         key: "id"
+            //     }
+            // },
             description: {
                 type: Sequelize.STRING
             },

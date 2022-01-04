@@ -23,6 +23,7 @@ module.exports = {
             {str: 1, agl: 2, int: 3, def: 10, evs: 3, createdAt: new Date(), updatedAt: new Date()}, // monk boots common
             /*id 10*/{str: 5, agl: 2, int: 1, dmg: 10, createdAt: new Date(), updatedAt: new Date()}, // warrior axe
             {str: 2, agl: 5, int: 1, dmg: 7, createdAt: new Date(), updatedAt: new Date()}, // assassin knife
+            {str: 3, agl: 3, int: 2, dmg: 12, createdAt: new Date(), updatedAt: new Date()}, // monk staff
         ], {});
     },
 

@@ -11,8 +11,10 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            this.hasOne(models.CurrentCondition, {foreignKey: "lvl_id"})
         }
     }
+
     LEVELS.init({
         value: DataTypes.INTEGER,
         exp: DataTypes.INTEGER

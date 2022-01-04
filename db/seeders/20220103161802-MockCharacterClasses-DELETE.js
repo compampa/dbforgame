@@ -15,6 +15,7 @@ module.exports = {
         await queryInterface.bulkInsert('Classes', [
             {player_class_id: 1, character_id: 1, createdAt: new Date(), updatedAt: new Date()},
             {player_class_id: 2, character_id: 2, createdAt: new Date(), updatedAt: new Date()},
+            {player_class_id: 3, character_id: 3, createdAt: new Date(), updatedAt: new Date()},
         ], {});
     },
 
