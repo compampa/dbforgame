@@ -97,7 +97,7 @@ router.get('/get-mob-current-lvl/:id', async (req, res) => {
     const tempInventory = await CreepInventory.create({creep_id: tempCreep.id, item_id: drop.id})
     console.log(tempInventory);
     const bag = await Items.findByPk(tempInventory.id, {raw: true})
-    res.json({creepClass, creepStats, bag})
+    res.json({creepClass, creepStats, drop})
 })
 
 async function getWeapon(arr) {

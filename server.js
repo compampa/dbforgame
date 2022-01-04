@@ -8,7 +8,7 @@ const router = require('./routes/indexRouter');
 
 const app = express();
 
-const PORT = process.env.PORT ?? 3000; // process.env.PORT ??
+const PORT = 3000; // process.env.PORT ??
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
