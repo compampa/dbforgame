@@ -1,15 +1,12 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('Classes', {
+        await queryInterface.createTable('CharacterStats', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
-            },
-            class_name: {
-                type: Sequelize.STRING
             },
             str: {
                 type: Sequelize.INTEGER
@@ -20,7 +17,25 @@ module.exports = {
             int: {
                 type: Sequelize.INTEGER
             },
-            img: {
+            evs: {
+                type: Sequelize.INTEGER
+            },
+            def: {
+                type: Sequelize.INTEGER
+            },
+            dmg: {
+                type: Sequelize.INTEGER
+            },
+            hp: {
+                type: Sequelize.INTEGER
+            },
+            mp: {
+                type: Sequelize.INTEGER
+            },
+            ap: {
+                type: Sequelize.INTEGER
+            },
+            desc: {
                 type: Sequelize.STRING
             },
             createdAt: {
@@ -34,6 +49,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('Classes');
+        await queryInterface.dropTable('CharacterStats');
     }
 };

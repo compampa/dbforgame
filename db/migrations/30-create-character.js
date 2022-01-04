@@ -18,16 +18,16 @@ module.exports = {
             nickname: {
                 type: Sequelize.STRING
             },
-            class_id: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: "Classes",
-                    key: "id"
-                }
-            },
-            lvl: {
-                type: Sequelize.INTEGER
-            },
+            // class_id: {
+            //     type: Sequelize.INTEGER,
+            //     references: {
+            //         model: "PlayerClasses",
+            //         key: "id"
+            //     }
+            // },
+            // lvl: {
+            //     type: Sequelize.INTEGER
+            // },
             // equip_set: {
             //     type: Sequelize.INTEGER,
             //     references: {
@@ -38,7 +38,7 @@ module.exports = {
             balance: {
                 type: Sequelize.INTEGER
             },
-            avatar: {
+            exp: {
                 type: Sequelize.STRING
             },
             createdAt: {

@@ -6,39 +6,34 @@ module.exports = {
          * Add seed commands here.
          *
          * Example:
-         * await queryInterface.bulkInsert('People', [{
+         * await queryInterface.bulkInsert('PlayerClasses', [{
          *   name: 'John Doe',
          *   isBetaMember: false
          * }], {});
          */
-        await queryInterface.bulkInsert('Items', [
+        await queryInterface.bulkInsert('PlayerClasses', [
             {
-                grade_id: 10,
-                item_name: "Warrior Axe",
-                type: "weapon",
-                info: "description",
-                img: "link",
+                class: 'warrior',
+                description: 'mighty warrior',
+                img: '/image-link',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
             {
-                grade_id: 11,
-                item_name: "Assassin Knife",
-                type: "weapon",
-                info: "description",
-                img: "link",
+                class: 'assassin',
+                description: 'freaky assassin',
+                img: '/image-link',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
             {
-                grade_id: 12,
-                item_name: "Monks Staff",
-                type: "weapon",
-                info: "description",
-                img: "link",
+                class: 'monk',
+                description: 'patient adjascent monk',
+                img: '/image-link',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
+
         ], {});
     },
 
@@ -47,8 +42,8 @@ module.exports = {
          * Add commands to revert seed here.
          *
          * Example:
-         * await queryInterface.bulkDelete('People', null, {});
+         * await queryInterface.bulkDelete('PlayerClasses', null, {});
          */
-        await queryInterface.bulkDelete('Items', null, {});
+        await queryInterface.bulkDelete('PlayerClasses', null, {});
     }
 };

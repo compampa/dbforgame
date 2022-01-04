@@ -11,9 +11,6 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             this.belongsToMany(models.Character, {through: "Inventories", foreignKey: "item_id"})
-            // this.hasOne(models.EquipSet, {foreignKey: "weapon_id"})
-            // this.belongsToMany(models.EquipSet, {through: "ArmorSets", foreignKey: "item_id"})
-
             this.belongsToMany(models.Character, {through: "Equipment", foreignKey: "item_id"})
         }
     }
@@ -23,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
         grade_id: DataTypes.INTEGER,
         type: DataTypes.STRING,
         info: DataTypes.STRING,
-        img: DataTypes.STRING
+        img: DataTypes.STRING,
+        price: DataTypes.INTEGER
     }, {
         sequelize,
         modelName: 'Items',
