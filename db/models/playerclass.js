@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             this.belongsToMany(models.Character, {through: "Classes", foreignKey: "player_class_id"})
             // this.belongsTo(models.CharacterStats, {foreignKey: "stats_id"})
             this.hasOne(models.CurrentCondition, {foreignKey: "class_id"})
-
+            this.hasOne(models.Creep, {foreignKey: "class_id"})
         }
     }
 

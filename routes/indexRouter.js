@@ -4,7 +4,7 @@ const {
     Character, Class, User, Items,
     Grade, Inventory, Parameter,
     Equipment, PlayerClass, Classes, CharacterStats, LEVELS,
-    CurrentCondition
+    CurrentCondition, Creep, CreepInventory
 } = require('../db/models')
 
 router.get('/', async (req, res) => {
@@ -78,6 +78,26 @@ router.get('/ready-for-fun/:id', async (req, res) => {
     } catch (e) {
         console.log(e);
     }
+})
+
+router.get('/get-mob-current-lvl/:id', async (req, res) => {
+    const character = await Character.findByPk(req.params.id, {raw: true})
+    const lvl = await getLVL(character)
+    const creeps = await CurrentCondition.findAll({where: {lvl_id: Number(lvl), [Op.and]: {class_id: [4, 5, 6]}}, raw: true})
+    const temp = creeps[Math.floor(Math.random() * creeps.length)]
+    console.log(temp);
+    const creepStats = await CharacterStats.findByPk(temp.stats_id, {raw: true})
+    const creepClass = await PlayerClass.findByPk(temp.class_id, {raw: true})
+    console.log('creep stats', creepStats);
+    console.log('creep class', creepClass);
+    const tempCreep = await Creep.create({class_id: creepClass.id, creep_inventory_id: character.id})
+    console.log(tempCreep);
+    const items = await Items.findAll({raw: true})
+    const drop = items[Math.floor(Math.random() * items.length)]
+    const tempInventory = await CreepInventory.create({creep_id: tempCreep.id, item_id: drop.id})
+    console.log(tempInventory);
+    const bag = await Items.findByPk(tempInventory.id, {raw: true})
+    res.json({creepClass, creepStats, bag})
 })
 
 async function getWeapon(arr) {
@@ -218,6 +238,12 @@ async function getCharacterStats(id) {
     })
     const currentStatsRaw = await CharacterStats.findOne({where: {id: playerStats.stats_id}, raw: true})
     return currentStatsRaw
+}
+
+async function getLVL(obj) {
+    const level = await LEVELS.findAll({where: {exp: {[Op.gt]: Number(obj.exp)}}, raw: true})
+    const currentLevel = level[0].value - 1
+    return currentLevel
 }
 
 async function getCharacterStatsFull(id, arr) {
