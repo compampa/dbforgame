@@ -4,7 +4,7 @@ const {
     Character, Class, User, Items,
     Grade, Inventory, Parameter,
     Equipment, PlayerClass, Classes, CharacterStats, LEVELS,
-    CurrentCondition, Creep, CreepInventory
+    CurrentCondition, Creep, CreepInventory, BattleRoom
 } = require('../db/models')
 
 router.get('/', async (req, res) => {
@@ -85,19 +85,19 @@ router.get('/get-mob-current-lvl/:id', async (req, res) => {
     const lvl = await getLVL(character)
     const creeps = await CurrentCondition.findAll({where: {lvl_id: Number(lvl), [Op.and]: {class_id: [4, 5, 6]}}, raw: true})
     const temp = creeps[Math.floor(Math.random() * creeps.length)]
-    console.log(temp);
     const creepStats = await CharacterStats.findByPk(temp.stats_id, {raw: true})
     const creepClass = await PlayerClass.findByPk(temp.class_id, {raw: true})
-    console.log('creep stats', creepStats);
-    console.log('creep class', creepClass);
     const tempCreep = await Creep.create({class_id: creepClass.id, creep_inventory_id: character.id})
-    console.log(tempCreep);
     const items = await Items.findAll({raw: true})
     const drop = items[Math.floor(Math.random() * items.length)]
     const tempInventory = await CreepInventory.create({creep_id: tempCreep.id, item_id: drop.id})
-    console.log(tempInventory);
     const bag = await Items.findByPk(tempInventory.id, {raw: true})
     res.json({creepClass, creepStats, drop})
+})
+
+router.post('/post-battle-room/:id', async (req, res) => {
+    const room = await BattleRoom.create({initial_character_id: req.params.id})
+    res.json({room})
 })
 
 async function getWeapon(arr) {
