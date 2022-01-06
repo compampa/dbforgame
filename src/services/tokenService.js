@@ -34,21 +34,21 @@ class TokenService {
     async saveToken(userId, refreshToken) {
         const tokenData = await UserToken.findOne({where: {user_id: userId}})
         if (tokenData) {
-            const updatedToken = await UserToken.update({refresh_token: refreshToken}, {where: {user_id: userId}})
+            const updatedToken = await UserToken.update({refreshToken: refreshToken}, {where: {user_id: userId}})
             return updatedToken
         }
-        const newToken = await UserToken.create({user_id: userId, refresh_token: refreshToken})
+        const newToken = await UserToken.create({user_id: userId, refreshToken: refreshToken})
         return newToken
     }
 
     async removeToken(refreshToken) {
-        const currToken = await UserToken.findOne({where: {refresh_token: refreshToken}})
+        const currToken = await UserToken.findOne({where: {refreshToken: refreshToken}})
         await currToken.destroy()
         return currToken
     }
 
     async findToken(refreshToken) {
-        const currToken = await UserToken.findOne({where: {refresh_token: refreshToken}})
+        const currToken = await UserToken.findOne({where: {refreshToken: refreshToken}})
         return currToken
     }
 }
