@@ -4,8 +4,8 @@ class UserController {
     async registration(req, res, next) {
         try {
             console.log(req.body)
-            const {email, password, name} = req.body
-            const userData = await userService.registration(email, password, name)
+            const {email, password, login} = req.body
+            const userData = await userService.registration(email, password, login)
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true
@@ -51,16 +51,6 @@ class UserController {
                 httpOnly: true
             })
             return res.json(userData)
-        } catch (e) {
-            next(e)
-        }
-    }
-
-    async getAllCategories(req, res, next) {
-        try {
-            const getAllfromDb = await userService.getAll()
-            console.log(getAllfromDb)
-            return res.json(getAllfromDb)
         } catch (e) {
             next(e)
         }
