@@ -1,7 +1,9 @@
 require('dotenv').config();
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const cookieParser = require('cookie-parser')
+const index = require('./src/routes/index')
+const errorMiddleware = require('./src/middlewares/errorMiddleware')
 
 
 const router = require('./routes/indexRouter');
@@ -22,6 +24,8 @@ app.use(cookieParser());
 // app.use(userCheck);
 
 app.use('/', router);
+app.use('/api', index)
+app.use(errorMiddleware)
 
 app.listen(PORT, () => {
     console.log(`------------------- here we  go on  ${PORT}-------------------`);
