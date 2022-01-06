@@ -90,9 +90,11 @@ router.get('/get-mob-current-lvl/:id', async (req, res) => {
     const tempCreep = await Creep.create({class_id: creepClass.id, creep_inventory_id: character.id})
     const items = await Items.findAll({raw: true})
     const drop = items[Math.floor(Math.random() * items.length)]
-    const tempInventory = await CreepInventory.create({creep_id: tempCreep.id, item_id: drop.id})
-    const bag = await Items.findByPk(tempInventory.id, {raw: true})
-    res.json({creepClass, creepStats, drop})
+    const money = getRandomNumber((lvl * 5), (lvl * 9))
+    const exp = getRandomNumber(lvl, (lvl * 4))
+    const bag = await CreepInventory.create({creep_id: tempCreep.id, item_id: drop.id, cash: money, exp: exp})
+    // const bag = await Items.findByPk(tempInventory.id, {raw: true})
+    res.json({creepClass, creepStats, bag})
 })
 
 router.post('/post-battle-room/:id', async (req, res) => {
@@ -104,6 +106,29 @@ router.get('/get-all-rooms', async (req, res) => {
     const rooms = await BattleRoom.findAll({raw: true})
     res.json(rooms)
 })
+
+router.post('/sell-items', async (req, res) => {
+    const {id, items} = req.body
+    const character = await Character.findByPk(id, {raw: true})
+    const itemsOnCharacter = await getInventory(id)
+    for (let i = 0; i < items.length; i += 1) {
+        if (itemsOnCharacter.includes(items[i])) {
+            const item = await Items.findByPk(items[i].id, {raw: true})
+            await Inventory.destroy({where: {character_id: character.id, item_id: item.id}})
+            await Character.increment({cash: item.cash}, {where: {id: character.id}})
+        }
+    }
+})
+
+function getRandomNumber(min, max) { // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+// router.get('/mob-for-battle/:id', async (req, res) => {
+//     const character = await Character.findByPk(req.params.id)
+//     const lvl = getLVL(character)
+//
+// })
 
 async function getWeapon(arr) {
     const weapRaw = await Items.findAll({

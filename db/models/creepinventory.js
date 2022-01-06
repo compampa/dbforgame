@@ -19,7 +19,9 @@ module.exports = (sequelize, DataTypes) => {
 
     CreepInventory.init({
         creep_id: DataTypes.INTEGER,
-        item_id: DataTypes.INTEGER
+        item_id: DataTypes.INTEGER,
+        cash: DataTypes.INTEGER,
+        exp: DataTypes.INTEGER
     }, {
         sequelize,
         modelName: 'CreepInventory',

@@ -19,7 +19,8 @@ module.exports = {
                 info: "description",
                 img: "link",
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             },
             {
                 grade_id: 1,
@@ -28,7 +29,8 @@ module.exports = {
                 info: "description",
                 img: "link",
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             },
             {
                 grade_id: 1,
@@ -37,7 +39,8 @@ module.exports = {
                 info: "description",
                 img: "link",
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             },
             {
                 grade_id: 1,
@@ -46,7 +49,8 @@ module.exports = {
                 info: "description",
                 img: "link",
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             },
             {
                 grade_id: 1,
@@ -55,7 +59,8 @@ module.exports = {
                 info: "description",
                 img: "link",
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             },
             {
                 grade_id: 1,
@@ -64,7 +69,8 @@ module.exports = {
                 info: "description",
                 img: "link",
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             },
             {
                 grade_id: 1,
@@ -73,7 +79,8 @@ module.exports = {
                 info: "description",
                 img: "link",
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             },
             {
                 grade_id: 1,
@@ -82,7 +89,8 @@ module.exports = {
                 info: "description",
                 img: "link",
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             },
             {
                 grade_id: 1,
@@ -91,7 +99,8 @@ module.exports = {
                 info: "description",
                 img: "link",
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             }
         ], {});
     },
