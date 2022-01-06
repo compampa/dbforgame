@@ -100,6 +100,11 @@ router.post('/post-battle-room/:id', async (req, res) => {
     res.json({room})
 })
 
+router.get('/get-all-rooms', async (req, res) => {
+    const rooms = await BattleRoom.findAll({raw: true})
+    res.json(rooms)
+})
+
 async function getWeapon(arr) {
     const weapRaw = await Items.findAll({
         where: {id: arr, type: 'weapon'},
