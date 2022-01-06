@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             this.hasOne(models.Character, {foreignKey: "user_id"})
 
-            this.belongsTo(models.User, {foreignKey: "user_id"})
+            this.hasOne(models.UserToken, {foreignKey: "user_id"})
         }
     }
 

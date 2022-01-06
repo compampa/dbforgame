@@ -11,12 +11,14 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.hasOne(models.UserToken, {foreignKey: "user_id"})
+            this.belongsTo(models.User, {foreignKey: "user_id"})
         }
     }
+
     UserToken.init({
         user_id: DataTypes.INTEGER,
-        token: DataTypes.TEXT
+
+        refreshToken: DataTypes.TEXT
     }, {
         sequelize,
         modelName: 'UserToken',
