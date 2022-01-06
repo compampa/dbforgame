@@ -109,6 +109,7 @@ router.get('/get-all-rooms', async (req, res) => {
 
 router.post('/sell-items', async (req, res) => {
     const {id, items} = req.body
+    console.log(req.body)
     const character = await Character.findByPk(id, {raw: true})
     const itemsOnCharacter = await getInventory(id)
     for (let i = 0; i < items.length; i += 1) {
