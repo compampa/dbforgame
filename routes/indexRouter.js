@@ -58,6 +58,7 @@ router.get('/get-character-stats/:id', async (req, res) => {
 router.get('/ready-for-fun/:id', async (req, res) => {
     try {
         const character = await User.findByPk(req.params.id)
+        console.log(character)
         const equipment = await Equipment.findAll({where: {character_id: character.id}, raw: true})
         const itemsId = equipment.map(e => e.item_id)
         const accessories_set = await getAccessorySet(itemsId)
