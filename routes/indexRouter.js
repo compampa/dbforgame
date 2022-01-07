@@ -121,6 +121,32 @@ router.post('/sell-items', async (req, res) => {
     }
 })
 
+router.get('/get-all-classes', async (req, res) => {
+    try {
+        const classes = await PlayerClass.findAll({where: {id: [1, 2, 3]}, raw: true})
+        res.json(classes)
+    } catch (e) {
+        console.log(e)
+        res.sendStatus(400)
+    }
+})
+
+router.post('/set-player-class', async (req, res) => {
+    const {user_id, class_id, nickname} = req.body
+    try {
+        const nicknameCheck = await Character.findOne({where: {nickname}})
+        if (!nicknameCheck) {
+            const character = await Character.create({user_id, nickname, exp: 0, balance: 0})
+            await Classes.create({player_class_id: class_id, character_id: character.id})
+            res.sendStatus(201)
+        }
+    } catch (e) {
+        console.log(e)
+        res.sendStatus(400, 'This nickname is already in use!')
+    }
+})
+
+
 function getRandomNumber(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min)
 }

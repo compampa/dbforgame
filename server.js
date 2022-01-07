@@ -11,7 +11,7 @@ const router = require('./routes/indexRouter');
 
 const app = express();
 
-const PORT = process.env.PORT ?? 3000 // process.env.PORT ??
+const PORT = process.env.PORT ?? 4000 // process.env.PORT ??
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
@@ -24,7 +24,7 @@ app.use(cookieParser());
 
 app.use('/db', router);
 app.use('/api', index)
-app.get('/*', (req,res)=> {
+app.get('/*', (req, res) => {
     // res.sendFile(path.join((__dirname, 'build', 'index.html')))
     res.sendFile('./build/index.html', {root: __dirname})
 
