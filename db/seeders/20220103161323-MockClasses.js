@@ -33,6 +33,28 @@ module.exports = {
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
+            {
+                class: 'zombie',
+                description: 'horrible brainless zombie',
+                img: '/image-link',
+                createdAt: new Date(),
+                updatedAt: new Date()
+            },
+            {
+                class: 'animal',
+                description: 'wild and dangerous animal',
+                img: '/image-link',
+                createdAt: new Date(),
+                updatedAt: new Date()
+            },
+            {
+                class: 'pagan',
+                description: 'crazy pagan from near village',
+                img: '/image-link',
+                createdAt: new Date(),
+                updatedAt: new Date()
+            },
+
 
         ], {});
     },

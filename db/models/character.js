@@ -11,8 +11,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             this.belongsTo(models.User, {foreignKey: "user_id"})
-            // this.belongsTo(models.Class, {foreignKey: "class_id"})
-            // this.belongsTo(models.PlayerClass, {foreignKey: "class_id"})
+            this.hasMany(models.BattleRoom, {foreignKey: "initial_character_id"})
             this.belongsToMany(models.Items, {through: "Inventories", foreignKey: "character_id"})
             this.belongsToMany(models.Items, {through: "Equipment", foreignKey: "character_id"})
             this.belongsToMany(models.PlayerClass, {through: "Classes", foreignKey: "character_id"})

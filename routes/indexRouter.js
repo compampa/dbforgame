@@ -4,7 +4,7 @@ const {
     Character, Class, User, Items,
     Grade, Inventory, Parameter,
     Equipment, PlayerClass, Classes, CharacterStats, LEVELS,
-    CurrentCondition
+    CurrentCondition, Creep, CreepInventory, BattleRoom
 } = require('../db/models')
 
 router.get('/', async (req, res) => {
@@ -57,17 +57,107 @@ router.get('/get-character-stats/:id', async (req, res) => {
 
 router.get('/ready-for-fun/:id', async (req, res) => {
     try {
-        const equipment = await Equipment.findAll({where: {character_id: req.params.id}, raw: true})
+        const tempCharacter = await Character.findOne({where: {user_id: req.params.id}, raw: true})
+        console.log(tempCharacter)
+        const equipment = await Equipment.findAll({where: {character_id: tempCharacter.id}, raw: true})
         const itemsId = equipment.map(e => e.item_id)
         const accessories_set = await getAccessorySet(itemsId)
         const armor_set = await getArmorSet(itemsId)
         const weapon = await getWeapon(itemsId)
-        const total_stats = await getCharacterStatsFull(req.params.id, itemsId)
-        return res.json({armor_set, accessories_set, weapon, total_stats})
+        const total_stats = await getCharacterStatsFull(tempCharacter.id, itemsId)
+        const nickName = total_stats.nickname
+        const lvl = total_stats.lvl
+        const exp = total_stats.exp
+        const hp = total_stats.hp
+        const mp = total_stats.mp
+        const ap = total_stats.ap
+        const playerClass = total_stats.class
+        const avatar = total_stats.avatar
+        return res.json({
+            armor_set, accessories_set, weapon, total_stats, nickName,
+            lvl, exp, hp, mp, ap, playerClass, avatar
+        })
     } catch (e) {
         console.log(e);
     }
 })
+
+router.get('/get-mob-current-lvl/:id', async (req, res) => {
+    const character = await Character.findByPk(req.params.id, {raw: true})
+    const lvl = await getLVL(character)
+    const creeps = await CurrentCondition.findAll({where: {lvl_id: Number(lvl), [Op.and]: {class_id: [4, 5, 6]}}, raw: true})
+    const temp = creeps[Math.floor(Math.random() * creeps.length)]
+    const creepStats = await CharacterStats.findByPk(temp.stats_id, {raw: true})
+    const creepClass = await PlayerClass.findByPk(temp.class_id, {raw: true})
+    const tempCreep = await Creep.create({class_id: creepClass.id, creep_inventory_id: character.id})
+    const items = await Items.findAll({raw: true})
+    const drop = items[Math.floor(Math.random() * items.length)]
+    const money = getRandomNumber((lvl * 5), (lvl * 9))
+    const exp = getRandomNumber(lvl, (lvl * 4))
+    const bag = await CreepInventory.create({creep_id: tempCreep.id, item_id: drop.id, cash: money, exp: exp})
+    // const bag = await Items.findByPk(tempInventory.id, {raw: true})
+    res.json({creepClass, creepStats, bag})
+})
+
+router.post('/post-battle-room/:id', async (req, res) => {
+    const room = await BattleRoom.create({initial_character_id: req.params.id})
+    res.json({room})
+})
+
+router.get('/get-all-rooms', async (req, res) => {
+    const rooms = await BattleRoom.findAll({raw: true})
+    res.json(rooms)
+})
+
+router.post('/sell-items', async (req, res) => {
+    const {id, items} = req.body
+    console.log(req.body)
+    const character = await Character.findByPk(id, {raw: true})
+    const itemsOnCharacter = await getInventory(id)
+    for (let i = 0; i < items.length; i += 1) {
+        if (itemsOnCharacter.includes(items[i])) {
+            const item = await Items.findByPk(items[i].id, {raw: true})
+            await Inventory.destroy({where: {character_id: character.id, item_id: item.id}})
+            await Character.increment({cash: item.cash}, {where: {id: character.id}})
+        }
+    }
+})
+
+router.get('/get-all-classes', async (req, res) => {
+    try {
+        const classes = await PlayerClass.findAll({where: {id: [1, 2, 3]}, raw: true})
+        res.json(classes)
+    } catch (e) {
+        console.log(e)
+        res.sendStatus(400)
+    }
+})
+
+router.post('/set-player-class', async (req, res) => {
+    const {user_id, class_id, nickname} = req.body
+    try {
+        const nicknameCheck = await Character.findOne({where: {nickname}})
+        if (!nicknameCheck) {
+            const character = await Character.create({user_id, nickname, exp: 0, balance: 0})
+            await Classes.create({player_class_id: class_id, character_id: character.id})
+            res.sendStatus(201)
+        }
+    } catch (e) {
+        console.log(e)
+        res.sendStatus(400, 'This nickname is already in use!')
+    }
+})
+
+
+function getRandomNumber(min, max) { // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+// router.get('/mob-for-battle/:id', async (req, res) => {
+//     const character = await Character.findByPk(req.params.id)
+//     const lvl = getLVL(character)
+//
+// })
 
 async function getWeapon(arr) {
     const weapRaw = await Items.findAll({
@@ -207,6 +297,12 @@ async function getCharacterStats(id) {
     })
     const currentStatsRaw = await CharacterStats.findOne({where: {id: playerStats.stats_id}, raw: true})
     return currentStatsRaw
+}
+
+async function getLVL(obj) {
+    const level = await LEVELS.findAll({where: {exp: {[Op.gt]: Number(obj.exp)}}, raw: true})
+    const currentLevel = level[0].value - 1
+    return currentLevel
 }
 
 async function getCharacterStatsFull(id, arr) {

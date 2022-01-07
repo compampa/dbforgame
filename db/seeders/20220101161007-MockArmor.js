@@ -99,7 +99,8 @@ module.exports = {
                 info: 'description',
                 img: 'link',
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             },
         ], {});
     },

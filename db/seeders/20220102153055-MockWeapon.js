@@ -19,7 +19,8 @@ module.exports = {
                 info: "description",
                 img: "link",
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             },
             {
                 grade_id: 11,
@@ -28,7 +29,8 @@ module.exports = {
                 info: "description",
                 img: "link",
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             },
             {
                 grade_id: 12,
@@ -37,7 +39,8 @@ module.exports = {
                 info: "description",
                 img: "link",
                 createdAt: new Date(),
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                price: 12,
             },
         ], {});
     },
