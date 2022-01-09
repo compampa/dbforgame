@@ -13,13 +13,32 @@ module.exports = {
          */
         await queryInterface.bulkInsert('Characters', [
             {
-                nickname: 'John Doe',
-                str: 5,
-                agl: 5,
-                int: 5,
-                equip_set: 1,
+                user_id: 1,
+                nickname: 'John_Doe',
+                // class_id: 1,
+                // lvl: 10,
                 balance: 100,
-                avatar: 'link',
+                exp: 5,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            },
+            {
+                user_id: 2,
+                nickname: 'Darsen',
+                // class_id: 1,
+                // lvl: 10,
+                balance: 100,
+                exp: 5,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            },
+            {
+                user_id: 3,
+                nickname: 'Aleksey',
+                // class_id: 1,
+                // lvl: 10,
+                balance: 100,
+                exp: 5,
                 createdAt: new Date(),
                 updatedAt: new Date()
             }
