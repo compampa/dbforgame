@@ -23,12 +23,13 @@ app.use(cookieParser());
 
 
 app.use('/db', router);
-app.use('/api', index)
 app.get('/*', (req, res) => {
     // res.sendFile(path.join((__dirname, 'build', 'index.html')))
     res.sendFile('./build/index.html', {root: __dirname})
 
 })
+app.use('/api', index)
+
 app.use(errorMiddleware)
 
 app.listen(PORT, () => {
