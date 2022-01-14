@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             this.hasMany(models.BattleRoom, {foreignKey: "initial_character_id"})
             this.belongsToMany(models.Items, {through: "Inventories", foreignKey: "character_id"})
             this.belongsToMany(models.Items, {through: "Equipment", foreignKey: "character_id"})
-            this.belongsToMany(models.Items, {through: "Auctions", foreignKey: "character_id"})
+            // this.belongsToMany(models.Items, {through: "Auctions", foreignKey: "character_id"})
             this.belongsToMany(models.PlayerClass, {through: "Classes", foreignKey: "character_id"})
         }
     }
