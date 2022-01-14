@@ -8,10 +8,11 @@ const errorMiddleware = require('./src/middlewares/errorMiddleware')
 
 
 const router = require('./routes/indexRouter');
+const auctionRouter = require('./routes/auction')
 
 const app = express();
 
-const PORT = process.env.PORT ?? 4000 // process.env.PORT ??
+const PORT = 4000 // process.env.PORT ??
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
@@ -21,7 +22,8 @@ app.use(cors({
 }));
 app.use(cookieParser());
 
-
+// app.use('/battle')
+app.use('/auction', auctionRouter)
 app.use('/db', router);
 app.use('/api', index)
 app.get('/*', (req, res) => {
