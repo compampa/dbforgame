@@ -104,7 +104,7 @@ router.post('/post-battle-room', async (req, res) => {
     try {
     const check = await BattleRoom.findOne({
         where:
-            {[Op.or]:[{initial_character: req.body.id}, {opponent_id: req.body.id}]},
+            {[Op.or]:[{initial_character_id: req.body.id}, {opponent_id: req.body.id}]},
         raw:true})
 
     if (!check){
