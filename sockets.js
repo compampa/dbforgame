@@ -19,8 +19,8 @@ io.on('connection', socket => {
         try{
         socket.join(room.id)
         console.log('PLAAAAAYER ================>',player)
-        const temp = await BattleRoom.create({initial_character_id: player.id, description: 'idle'})
-        console.log(temp)
+        // const temp = await BattleRoom.create({initial_character_id: player.id, description: 'idle'})
+        // console.log(temp)
         players.push({player, battlePlayer})
         io.to(room.id).emit('join-room', players)
         } catch (e) {
