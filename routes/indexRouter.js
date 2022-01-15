@@ -121,7 +121,8 @@ router.post('/post-battle-room', async (req, res) => {
 router.get('/enter-exact-room/:id', async (req,res)=>{
     try {
         console.log('======================> DAAAAAARSEEEEEEN!!!!',req.params)
-        const room = await BattleRoom.findByPk(Number(req.params))
+        const room = await BattleRoom.findOne({where: {id: Number(req.params), raw:true}})
+        console.log('ROOOOOOOOOOOOOOOOM!!!= ===============>', room)
         res.json({id: room.id})
     } catch (e) {
         console.log(e)
