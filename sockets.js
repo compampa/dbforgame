@@ -2,6 +2,8 @@ const {Server} = require('socket.io')
 const app = require('./server')
 const http = require('http')
 
+const { BattleRoom } = require('./db/models')
+
 const server = http.createServer(app)
 
 const io = new Server(server, {cors: {origin: true}})
@@ -13,8 +15,10 @@ io.on('connection', socket => {
         io.emit('message', {name, message})
     })
 
-    socket.on('join-room', (room, player, battlePlayer, cb) => {
+    socket.on('join-room', async (room, player, battlePlayer, cb) => {
         socket.join(room.id)
+        const temp = await BattleRoom.create({initial_character: player.id, description: 'idle'})
+        console.log(temp)
         players.push({player, battlePlayer})
         io.to(room.id).emit('join-room', players)
     })
