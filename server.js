@@ -9,11 +9,8 @@ const errorMiddleware = require('./src/middlewares/errorMiddleware')
 const router = require('./routes/indexRouter');
 // const auctionRouter = require('./routes/auction')
 
-const app =require('express')()
-const http = require('http').createServer(app)
-const io = require('socket.io')(http, {cors: {origin: true}})
 
-// const app = express();
+const app = express();
 
 const PORT =  4000 //   process.env.PORT ??
 app.use(express.static(path.join(__dirname, 'build')))
@@ -24,34 +21,6 @@ app.use(cors({
     credentials: true,
 }));
 app.use(cookieParser());
-
-let players = []
-
-io.on('connection', socket => {
-    socket.on('message', ({name, message}) => {
-        io.emit('message', {name, message})
-    })
-
-    socket.on('join-room', (room, player, battlePlayer, cb) => {
-        socket.join(room.id)
-        players.push({player, battlePlayer})
-        io.to(room.id).emit('join-room', players)
-    })
-
-    socket.on('punch', (room, player, battlePlayer) => {
-        socket.join(room.id)
-        players.map(el => {
-            if (el.player.nickName === player.nickname) {
-                return {player, battlePlayer}
-            } else {
-                return el
-            }
-        })
-        io.to(room.id).emit('punch', players)
-    })
-})
-
-
 
 // app.use('/battle')
 app.use('/db', router);
