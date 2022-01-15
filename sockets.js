@@ -16,12 +16,16 @@ io.on('connection', socket => {
     })
 
     socket.on('join-room', async (room, player, battlePlayer, cb) => {
+        try{
         socket.join(room.id)
         console.log('PLAAAAAYER ================>',player)
         const temp = await BattleRoom.create({initial_character_id: player.id, description: 'idle'})
         console.log(temp)
         players.push({player, battlePlayer})
         io.to(room.id).emit('join-room', players)
+        } catch (e) {
+            console.log(e)
+        }
     })
 
     socket.on('punch', (room, player, battlePlayer) => {
