@@ -109,7 +109,8 @@ router.post('/post-battle-room', async (req, res) => {
 
     if (!check){
 
-    const room = await BattleRoom.create({initial_character_id: req.body.id, description: 'idle'})
+    await BattleRoom.create({initial_character_id: req.body.id, description: 'idle'})
+        const room = await BattleRoom.findOne({where: {initial_character_id: req.body.id}})
     res.json({room})
     } else return res.json({message: "player already in battle"})
     } catch (e) {
