@@ -100,9 +100,21 @@ router.get('/get-mob-current-lvl/:id', async (req, res) => {
     res.json({creepClass, creepStats, bag})
 })
 
-router.post('/post-battle-room/:id', async (req, res) => {
-    const room = await BattleRoom.create({initial_character_id: req.params.id})
+router.post('/post-battle-room', async (req, res) => {
+    try {
+    const check = await BattleRoom.findOne({
+        where:
+            {[Op.or]:[{initial_character: req.body.id}, {opponent_id: req.body.id}]},
+        raw:true})
+
+    if (!check){
+
+    const room = await BattleRoom.create({initial_character_id: req.body.id, description: 'idle'})
     res.json({room})
+    } else return res.json({message: "player already in battle"})
+    } catch (e) {
+        console.log(e)
+    }
 })
 
 router.get('/get-all-rooms', async (req, res) => {
