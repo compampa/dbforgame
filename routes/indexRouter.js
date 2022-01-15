@@ -118,6 +118,14 @@ router.post('/post-battle-room', async (req, res) => {
     }
 })
 
+router.get('/enter-exact-room/:id', async (req,res)=>{
+    try {
+        const room = await BattleRoom.findByPk(req.params)
+    } catch (e) {
+        console.log(e)
+    }
+})
+
 router.get('/get-all-rooms', async (req, res) => {
     const rooms = await BattleRoom.findAll({raw: true})
     res.json(rooms)

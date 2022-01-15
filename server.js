@@ -10,6 +10,7 @@ const auctionRouter = require('./routes/auction')
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'build')))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors({origin: true, credentials: true,}));
