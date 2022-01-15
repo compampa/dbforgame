@@ -5,21 +5,14 @@ const path = require("path");
 const cookieParser = require('cookie-parser')
 const index = require('./src/routes/index')
 const errorMiddleware = require('./src/middlewares/errorMiddleware')
-
-
 const router = require('./routes/indexRouter');
 const auctionRouter = require('./routes/auction')
-
 const app = express();
 
-const PORT = process.env.PORT ?? 4000 //
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use(cors({
-    origin: true,
-    credentials: true,
-}));
+app.use(cors({origin: true, credentials: true,}));
 app.use(cookieParser());
 
 // app.use('/battle')
@@ -33,6 +26,4 @@ app.get('/*', (req, res) => {
 })
 app.use(errorMiddleware)
 
-app.listen(PORT, () => {
-    console.log(`------------------- here we  go on  ${PORT}-------------------`);
-});
+module.exports = app
