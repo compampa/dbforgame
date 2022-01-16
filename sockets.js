@@ -42,10 +42,9 @@ io.on('connection', socket => {
         socket.join(room.id)
         let currBattle = []
         currBattle.push({player, battlePlayer})
-        if (currBattle.length === 2) {
-            io.to(room.id).emit('punch', currBattle)
-            currBattle = []
-        }
+        io.to(room.id).emit('punch', currBattle)
+        currBattle = []
+
     })
     socket.on('close-private-room', (playerFromFront) => {
         arr = arr.filter(client => playerFromFront.id !== client.player.id)
