@@ -1,117 +1,304 @@
-'use strict';
+"use strict";
 
 module.exports = {
-    up: async (queryInterface, Sequelize) => {
-        /**
-         * Add seed commands here.
-         *
-         * Example:
-         * await queryInterface.bulkInsert('People', [{
-         *   name: 'John Doe',
-         *   isBetaMember: false
-         * }], {});
-         */
-        await queryInterface.bulkInsert('Items', [
-            {
-                grade_id: 2,
-                item_name: "Warrior's helmet",
-                type: 'head',
-                info: 'description',
-                img: 'link',
-                price: 10,
-                createdAt: new Date(),
-                updatedAt: new Date()
-            },
-            {
-                grade_id: 1,
-                item_name: "Warrior's plate",
-                type: 'body',
-                info: 'description',
-                img: 'link',
-                price: 12,
-                createdAt: new Date(),
-                updatedAt: new Date()
-            },
-            {
-                grade_id: 3,
-                item_name: "Warrior's boots",
-                type: 'legs',
-                info: 'description',
-                img: 'link',
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                price: 8,
-            },
-            {
-                grade_id: 4,
-                item_name: "Assassin's mask",
-                type: 'head',
-                info: 'description',
-                img: 'link',
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                price: 10,
-            },
-            {
-                grade_id: 5,
-                item_name: "Assassin's cuirass",
-                type: 'body',
-                info: 'description',
-                img: 'link',
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                price: 12,
-            },
-            {
-                grade_id: 6,
-                item_name: "Assassin's boots",
-                type: 'legs',
-                info: 'description',
-                img: 'link',
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                price: 9,
-            },
-            {
-                grade_id: 7,
-                item_name: "Monk's hood",
-                type: 'head',
-                info: 'description',
-                img: 'link',
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                price: 10,
-            },
-            {
-                grade_id: 8,
-                item_name: "Monk's mantle",
-                type: 'body',
-                info: 'description',
-                img: 'link',
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                price: 12,
-            },
-            {
-                grade_id: 9,
-                item_name: "Monk's boots",
-                type: 'legs',
-                info: 'description',
-                img: 'link',
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                price: 12,
-            },
-        ], {});
-    },
+  up: async (queryInterface, Sequelize) => {
+    /**
+     * Add seed commands here.
+     *
+     * Example:
+     * await queryInterface.bulkInsert('People', [{
+     *   name: 'John Doe',
+     *   isBetaMember: false
+     * }], {});
+     * https://dbforgame.herokuapp.com/static/img/classes/playerClasses/assasin-wonam.jpg
+     */
+    await queryInterface.bulkInsert(
+      "Items",
+      [
+        {
+          grade_id: 2,
+          item_name: "Warrior's helmet",
+          type: "head",
+          info: "This helmet was sanctified in the River Jordan, so it provides doubled protection combining the powers of copper and supreme magic.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/warriror/helmet.png",
+          price: 10,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          grade_id: 1,
+          item_name: "Warrior's plate",
+          type: "body",
+          info: "It is a sacred shield which embraces a life-giving power of the Sun. It can cloud your enemy’s mind and yield you a victory.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/warriror/plate.png",
+          price: 12,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          grade_id: 3,
+          item_name: "Warrior's boots",
+          type: "legs",
+          info: "These boots, which were tailored from the skin of Phoenix and the hair of Medusa, will make you faster, more agile and more enduring.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/warriror/boots.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 8,
+        },
+        {
+          grade_id: 4,
+          item_name: "Assassin's mask",
+          type: "head",
+          info: "The mask made of metal and Cerberus’ bone will increase your power threefold and make your enemy feel deadly terror.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/assassin/helmet.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 10,
+        },
+        {
+          grade_id: 5,
+          item_name: "Assassin's cuirass",
+          type: "body",
+          info: "This steel cuirass has golden inserts of jewelry which belonged to Nefertiti of Egypt. It has a powerful female energy and will protect you from shattering blows and thumps. ",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/assassin/plate.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 12,
+        },
+        {
+          grade_id: 6,
+          item_name: "Assassin's boots",
+          type: "legs",
+          info: "They are a legacy of Hermes, an ancient Greek god. They bestow their owner with a skill of supernatural craftiness, agility and speed.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/assassin/boots.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 9,
+        },
+        {
+          grade_id: 7,
+          item_name: "Monk's hood",
+          type: "head",
+          info: "Being inconspicuous on the outside, this hood hides a great power inside - it will make you wiser, more cunning and more prudent than your enemy.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/monk/helmet.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 10,
+        },
+        {
+          grade_id: 8,
+          item_name: "Monk's mantle",
+          type: "body",
+          info: "This garment which was made by holy monks will grant you 7 knight virtues: bravery, commitment, generosity, prudence, courtesy, honor and freedom.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/monk/plate.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 12,
+        },
+        {
+          grade_id: 9,
+          item_name: "Monk's boots",
+          type: "legs",
+          info: "These golden sabatons were created under the patronage of Achilles. They will make your mind more dextrous, and your legs faster.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/monk/boots.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 12,
+        },
+        /*uncommon*/
+        {
+          grade_id: 13,
+          item_name: "Warrior's helmet",
+          type: "head",
+          info: "This helmet was sanctified in the River Jordan, so it provides doubled protection combining the powers of copper and supreme magic.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/warriror/helmet.png",
+          price: 45,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          grade_id: 14,
+          item_name: "Warrior's plate",
+          type: "body",
+          info: "It is a sacred shield which embraces a life-giving power of the Sun. It can cloud your enemy’s mind and yield you a victory.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/warriror/plate.png",
+          price: 45,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          grade_id: 15,
+          item_name: "Warrior's boots",
+          type: "legs",
+          info: "These boots, which were tailored from the skin of Phoenix and the hair of Medusa, will make you faster, more agile and more enduring.",
+          img: "linhttps://dbforgame.herokuapp.com/static/img/items/armor/warriror/boots.pngk",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 35,
+        },
+        {
+          grade_id: 16,
+          item_name: "Assassin's mask",
+          type: "head",
+          info: "The mask made of metal and Cerberus’ bone will increase your power threefold and make your enemy feel deadly terror.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/assassin/helmet.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 45,
+        },
+        {
+          grade_id: 17,
+          item_name: "Assassin's cuirass",
+          type: "body",
+          info: "This steel cuirass has golden inserts of jewelry which belonged to Nefertiti of Egypt. It has a powerful female energy and will protect you from shattering blows and thumps.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/assassin/plate.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 45,
+        },
+        {
+          grade_id: 18,
+          item_name: "Assassin's boots",
+          type: "legs",
+          info: "They are a legacy of Hermes, an ancient Greek god. They bestow their owner with a skill of supernatural craftiness, agility and speed.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/assassin/boots.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 35,
+        },
+        {
+          grade_id: 19,
+          item_name: "Monk's hood",
+          type: "head",
+          info: "Being inconspicuous on the outside, this hood hides a great power inside - it will make you wiser, more cunning and more prudent than your enemy.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/monk/helmet.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 45,
+        },
+        {
+          grade_id: 20,
+          item_name: "Monk's mantle",
+          type: "body",
+          info: "This garment which was made by holy monks will grant you 7 knight virtues: bravery, commitment, generosity, prudence, courtesy, honor and freedom.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/monk/plate.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 45,
+        },
+        {
+          grade_id: 21,
+          item_name: "Monk's boots",
+          type: "legs",
+          info: "These golden sabatons were created under the patronage of Achilles. They will make your mind more dextrous, and your legs faster.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/monk/boots.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 35,
+        },
+        /*rare*/
+        {
+          grade_id: 22,
+          item_name: "Warrior's helmet",
+          type: "head",
+          info: "This helmet was sanctified in the River Jordan, so it provides doubled protection combining the powers of copper and supreme magic.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/warriror/helmet.png",
+          price: 95,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          grade_id: 23,
+          item_name: "Warrior's plate",
+          type: "body",
+          info: "It is a sacred shield which embraces a life-giving power of the Sun. It can cloud your enemy’s mind and yield you a victory.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/warriror/plate.png",
+          price: 95,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          grade_id: 24,
+          item_name: "Warrior's boots",
+          type: "legs",
+          info: "These boots, which were tailored from the skin of Phoenix and the hair of Medusa, will make you faster, more agile and more enduring.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/warriror/boots.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 80,
+        },
+        {
+          grade_id: 25,
+          item_name: "Assassin's mask",
+          type: "head",
+          info: "The mask made of metal and Cerberus’ bone will increase your power threefold and make your enemy feel deadly terror.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/assassin/helmet.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 95,
+        },
+        {
+          grade_id: 26,
+          item_name: "Assassin's cuirass",
+          type: "body",
+          info: "This steel cuirass has golden inserts of jewelry which belonged to Nefertiti of Egypt. It has a powerful female energy and will protect you from shattering blows and thumps.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/assassin/plate.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 95,
+        },
+        {
+          grade_id: 27,
+          item_name: "Assassin's boots",
+          type: "legs",
+          info: "They are a legacy of Hermes, an ancient Greek god. They bestow their owner with a skill of supernatural craftiness, agility and speed.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/assassin/boots.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 80,
+        },
+        {
+          grade_id: 28,
+          item_name: "Monk's hood",
+          type: "head",
+          info: "Being inconspicuous on the outside, this hood hides a great power inside - it will make you wiser, more cunning and more prudent than your enemy.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/monk/helmet.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 95,
+        },
+        {
+          grade_id: 29,
+          item_name: "Monk's mantle",
+          type: "body",
+          info: "This garment which was made by holy monks will grant you 7 knight virtues: bravery, commitment, generosity, prudence, courtesy, honor and freedom.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/monk/plate.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 95,
+        },
+        {
+          grade_id: 30,
+          item_name: "Monk's boots",
+          type: "legs",
+          info: "These golden sabatons were created under the patronage of Achilles. They will make your mind more dextrous, and your legs faster.",
+          img: "https://dbforgame.herokuapp.com/static/img/items/armor/monk/boots.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          price: 80,
+        },
+      ],
+      {}
+    );
+  },
 
-    down: async (queryInterface, Sequelize) => {
-        /**
-         * Add commands to revert seed here.
-         *
-         * Example:
-         * await queryInterface.bulkDelete('People', null, {});
-         */
-        await queryInterface.bulkDelete('Items', null, {});
-    }
+  down: async (queryInterface, Sequelize) => {
+    /**
+     * Add commands to revert seed here.
+     *
+     * Example:
+     * await queryInterface.bulkDelete('People', null, {});
+     */
+    await queryInterface.bulkDelete("Items", null, {});
+  },
 };

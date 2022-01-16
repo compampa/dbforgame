@@ -197,6 +197,21 @@ router.post('/set-player-class', async (req, res) => {
     }
 })
 
+router.post('/post-random-item', async (req,res)=>{
+    const {id} = req.body
+    try {
+        const randomItemsRaw = await Items.findAll({raw:true})
+        console.log('RANDOM ITEMS LENGTH ====>',randomItemsRaw.length - 1)
+        const itemId = getRandomNumber(0, (randomItemsRaw.length -1) )
+
+        console.log('RANDOM ITEM ====>',itemId)
+        const inventory = await Inventory.update({where: {id}, raw:true})
+        console.log(inventory)
+    } catch (e) {
+        console.log(e)
+    }
+})
+
 
 function getRandomNumber(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min)
