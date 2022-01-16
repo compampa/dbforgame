@@ -164,8 +164,29 @@ router.post('/set-player-class', async (req, res) => {
         const nicknameCheck = await Character.findOne({where: {nickname}})
         if (!nicknameCheck) {
             const character = await Character.create({user_id, nickname, exp: 0, balance: 0})
-            await Classes.create({player_class_id: class_id, character_id: character.id})
-            res.sendStatus(201)
+// CHECK
+            const equipment = await Equipment.findAll({where: {character_id: character.id}, raw: true})
+            const itemsId = equipment.map(e => e.item_id)
+            const accessories_set = await getAccessorySet(itemsId)
+            const armor_set = await getArmorSet(itemsId)
+            const weapon = await getWeapon(itemsId)
+            const total_stats = await getCharacterStatsFull(character.id, itemsId)
+            const nickName = total_stats.nickname
+            const id = total_stats.id
+            const lvl = total_stats.lvl
+            const exp = total_stats.exp
+            const hp = total_stats.hp
+            const mp = total_stats.mp
+            const ap = total_stats.ap
+            const playerClass = total_stats.class
+            const avatar = total_stats.avatar
+            return res.json({
+                armor_set, accessories_set, weapon, total_stats, nickName,
+                id, lvl, exp, hp, mp, ap, playerClass, avatar
+            })
+// CHECK
+            // await Classes.create({player_class_id: class_id, character_id: character.id})
+            // res.sendStatus({})
         }
     } catch (e) {
         console.log(e)
