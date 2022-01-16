@@ -11,6 +11,7 @@ const io = new Server(server, {cors: {origin: true}})
 // const players = []
 
 io.on('connection', socket => {
+    const arr = []
     socket.on('message', ({name, message}) => {
         io.emit('message', {name, message})
     })
@@ -19,7 +20,7 @@ io.on('connection', socket => {
         try{
         socket.join(room.id)
             const currentRoom = await BattleRoom.findOne({where: {id: Number(room.id)}})
-            const arr = []
+
             if (Number(currentRoom.initial_character_id) === Number(player.id)){
                 arr.push({player,battlePlayer})
                 return io.to(room.id).emit('join-room', arr)
