@@ -19,10 +19,10 @@ io.on('connection', socket => {
         try{
         socket.join(room.id)
         console.log('PLAAAAAYER ================>',player)
-        const room = await BattleRoom.create({initial_character_id: player.id, description: 'idle'})
+        const newRoom = await BattleRoom.create({initial_character_id: player.id, description: 'idle'})
         // console.log(temp)
         //     room.push({player, battlePlayer})
-        io.to(room.id).emit('join-room', room)
+        io.to(room.id).emit('join-room', newRoom)
         } catch (e) {
             console.log(e)
         }
@@ -31,6 +31,7 @@ io.on('connection', socket => {
     socket.on('punch', async (room, player, battlePlayer) => {
 
         socket.join(room.id)
+        const newRoom = await BattleRoom.findByPk(Number(room.id))
         // players.map(el => {
         //     if (el.player.nickName === player.nickname) {
         //         return {player, battlePlayer}
@@ -38,7 +39,7 @@ io.on('connection', socket => {
         //         return el
         //     }
         // })
-        io.to(room.id).emit('punch', players)
+        io.to(room.id).emit('punch', newRoom)
     })
 
 })
