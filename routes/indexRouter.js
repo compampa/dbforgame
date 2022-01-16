@@ -58,10 +58,13 @@ router.get('/get-character-stats/:id', async (req, res) => {
 router.get('/ready-for-fun/:id', async (req, res) => {
     try {
         const tempCharacter = await Character.findOne({where: {user_id: req.params.id}, raw: true})
-        console.log(tempCharacter)
+        console.log('tempCharacter ==========>',tempCharacter)
         const equipment = await Equipment.findAll({where: {character_id: tempCharacter.id}, raw: true})
+        console.log('equipment ==========>',equipment)
         const itemsId = equipment.map(e => e.item_id)
+        console.log('itemsId: ===============>',itemsId)
         const accessories_set = await getAccessorySet(itemsId)
+        console.log('accessories_set ============>',accessories_set)
         const armor_set = await getArmorSet(itemsId)
         const weapon = await getWeapon(itemsId)
         const total_stats = await getCharacterStatsFull(tempCharacter.id, itemsId)
@@ -74,6 +77,11 @@ router.get('/ready-for-fun/:id', async (req, res) => {
         const ap = total_stats.ap
         const playerClass = total_stats.class
         const avatar = total_stats.avatar
+        const obj = {
+            armor_set, accessories_set, weapon, total_stats, nickName,
+            id, lvl, exp, hp, mp, ap, playerClass, avatar
+        }
+        console.log('READY FOR FUN: ===================>', obj)
         return res.json({
             armor_set, accessories_set, weapon, total_stats, nickName,
             id, lvl, exp, hp, mp, ap, playerClass, avatar
@@ -317,10 +325,12 @@ async function getArmorSet(arr) {
 }
 
 async function getAccessorySet(arr) {
+    console.log('ARRRRRRRRRRRRRRRRRRRRRR==============>', arr)
     const accRaw = await Items.findAll({
         where: {id: arr, [Op.or]: [{type: 'ring'}, {type: 'sphere'}, {type: 'necklace'}]},
         raw: true
     })
+    console.log('GET ACCESSEORY SET ==================>',accRaw)
     const accGrades = accRaw.map(e => e.grade_id)
     const accGradesRaw = []
     for (let i = 0; i < accGrades.length; i += 1) {
