@@ -8,7 +8,7 @@ const server = http.createServer(app)
 
 const io = new Server(server, {cors: {origin: true}})
 
-const players = []
+// const players = []
 
 io.on('connection', socket => {
     socket.on('message', ({name, message}) => {
@@ -19,24 +19,25 @@ io.on('connection', socket => {
         try{
         socket.join(room.id)
         console.log('PLAAAAAYER ================>',player)
-        // const temp = await BattleRoom.create({initial_character_id: player.id, description: 'idle'})
+        const room = await BattleRoom.create({initial_character_id: player.id, description: 'idle'})
         // console.log(temp)
-        players.push({player, battlePlayer})
-        io.to(room.id).emit('join-room', players)
+        //     room.push({player, battlePlayer})
+        io.to(room.id).emit('join-room', room)
         } catch (e) {
             console.log(e)
         }
     })
 
-    socket.on('punch', (room, player, battlePlayer) => {
+    socket.on('punch', async (room, player, battlePlayer) => {
+
         socket.join(room.id)
-        players.map(el => {
-            if (el.player.nickName === player.nickname) {
-                return {player, battlePlayer}
-            } else {
-                return el
-            }
-        })
+        // players.map(el => {
+        //     if (el.player.nickName === player.nickname) {
+        //         return {player, battlePlayer}
+        //     } else {
+        //         return el
+        //     }
+        // })
         io.to(room.id).emit('punch', players)
     })
 
