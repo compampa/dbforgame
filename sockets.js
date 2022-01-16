@@ -2,7 +2,7 @@ const {Server} = require('socket.io')
 const app = require('./server')
 const http = require('http')
 
-const { BattleRoom } = require('./db/models')
+const {BattleRoom} = require('./db/models')
 
 const server = http.createServer(app)
 
@@ -10,7 +10,7 @@ const io = new Server(server, {cors: {origin: true}})
 
 // const players = []
 
-const arr = []
+let arr = []
 io.on('connection', socket => {
 
     socket.on('message', ({name, message}) => {
@@ -18,20 +18,20 @@ io.on('connection', socket => {
     })
 
     socket.on('join-room', async (room, player, battlePlayer) => {
-        try{
-        socket.join(room.id)
+        try {
+            socket.join(room.id)
             const currentRoom = await BattleRoom.findOne({where: {id: Number(room.id)}})
 
-            if (Number(currentRoom.initial_character_id) === Number(player.id)){
-                arr.push({player,battlePlayer})
+            if (Number(currentRoom.initial_character_id) === Number(player.id)) {
+                arr.push({player, battlePlayer})
                 io.to(room.id).emit('join-room', arr)
             } else {
-                arr.push({player,battlePlayer})
+                arr.push({player, battlePlayer})
                 await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
                 const currentRoom2 = await BattleRoom.findOne({where: {id: Number(room.id)}})
                 io.to(room.id).emit('join-room', arr)
             }
-                 // await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
+            // await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
         } catch (e) {
             console.log(e)
 
@@ -39,17 +39,16 @@ io.on('connection', socket => {
     })
 
     socket.on('punch', async (room, player, battlePlayer) => {
-
         socket.join(room.id)
-        const newRoom = await BattleRoom.findByPk(Number(room.id))
-        // players.map(el => {
-        //     if (el.player.nickName === player.nickname) {
-        //         return {player, battlePlayer}
-        //     } else {
-        //         return el
-        //     }
-        // })
-        io.to(room.id).emit('punch', newRoom)
+        let currBattle = []
+        currBattle.push({player, battlePlayer})
+        if (currBattle.length === 2) {
+            io.to(room.id).emit('punch', currBattle)
+            currBattle = []
+        }
+    })
+    socket.on('close-private-room', (playerFromFront) => {
+        arr = arr.filter(client => playerFromFront.id !== client.player.id)
     })
 
 })
