@@ -20,8 +20,9 @@ io.on('connection', socket => {
         socket.join(room.id)
             const currentRoom = await BattleRoom.findOne({where: {id: Number(room.id)}})
             if (Number(currentRoom.initial_character_id) !== Number(player.id)){
-                const temp = await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
-                io.to(room.id).emit('join-room', currentRoom)
+                await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
+                const currentRoom2 = await BattleRoom.findOne({where: {id: Number(room.id)}})
+                io.to(room.id).emit('join-room', currentRoom2)
             } else io.to(room.id).emit('join-room', currentRoom)
                  // await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
         } catch (e) {
