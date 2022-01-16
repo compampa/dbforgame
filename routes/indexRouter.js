@@ -164,7 +164,11 @@ router.post('/set-player-class', async (req, res) => {
         const nicknameCheck = await Character.findOne({where: {nickname}})
         if (!nicknameCheck) {
             const character = await Character.create({user_id, nickname, exp: 0, balance: 0})
+
+            await Classes.create({player_class_id: class_id, character_id: character.id})
 // CHECK
+
+
             const equipment = await Equipment.findAll({where: {character_id: character.id}, raw: true})
             const itemsId = equipment.map(e => e.item_id)
             const accessories_set = await getAccessorySet(itemsId)
