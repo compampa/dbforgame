@@ -29,7 +29,7 @@ io.on('connection', socket => {
                 arr.push({player, battlePlayer})
                 await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
                 const currentRoom2 = await BattleRoom.findOne({where: {id: Number(room.id)}})
-                io.to(room.id).emit('join-room', arr)
+                io.to(room.id).emit('join-room', {arr, currentRoom2})
             }
             // await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
         } catch (e) {
@@ -41,8 +41,9 @@ io.on('connection', socket => {
     socket.on('punch', async (room, player, battlePlayer) => {
         socket.join(room.id)
         let currBattle = []
+        const currentRoom2 = await BattleRoom.findOne({where: {id: Number(room.id)}})
         currBattle.push({player, battlePlayer})
-        io.to(room.id).emit('punch', currBattle)
+        io.to(room.id).emit('punch', {arr, currentRoom2, currBattle})
         currBattle = []
 
     })
