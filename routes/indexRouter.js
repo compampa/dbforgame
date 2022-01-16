@@ -201,12 +201,9 @@ router.post('/post-random-item', async (req,res)=>{
     const {id} = req.body
     try {
         const randomItemsRaw = await Items.findAll({raw:true})
-        console.log('RANDOM ITEMS LENGTH ====>',randomItemsRaw.length - 1)
         const itemId = getRandomNumber(0, (randomItemsRaw.length -1) )
-
-        console.log('RANDOM ITEM ====>',itemId)
-        const inventory = await Inventory.update({where: {id}, raw:true})
-        console.log(inventory)
+        const inventory = await Inventory.create({character_id: Number(id) , item_id: Number(itemId)})
+        res.json(inventory)
     } catch (e) {
         console.log(e)
     }
