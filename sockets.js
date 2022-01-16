@@ -18,11 +18,12 @@ io.on('connection', socket => {
     socket.on('join-room', async (room, player, battlePlayer, cb) => {
         try{
         socket.join(room.id)
-        console.log('PLAAAAAYER ================>',player)
-        const newRoom = await BattleRoom.create({initial_character_id: player.id, description: 'idle'})
-        // console.log(temp)
-        //     room.push({player, battlePlayer})
-        io.to(room.id).emit('join-room', newRoom)
+            const currentRoom = await BattleRoom.findOne({where: {id: Number(room.id)}})
+            if (Number(currentRoom.initial_character_id) !== Number(player.id)){
+                const temp = await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
+                io.to(room.id).emit('join-room', currentRoom)
+            } else io.to(room.id).emit('join-room', currentRoom)
+                 // await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
         } catch (e) {
             console.log(e)
         }
