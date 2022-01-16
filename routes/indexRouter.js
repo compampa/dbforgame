@@ -202,8 +202,9 @@ router.post('/post-random-item', async (req,res)=>{
     try {
         const randomItemsRaw = await Items.findAll({raw:true})
         const itemId = getRandomNumber(0, (randomItemsRaw.length -1) )
-        const item = await Inventory.create({character_id: Number(id) , item_id: Number(itemId)})
-        res.json(item)
+        const newItem = await Inventory.create({character_id: Number(id) , item_id: Number(itemId)})
+        const item = await Items.findByPk(Number(newItem.id))
+        res.json(item.dataValues)
     } catch (e) {
         console.log(e)
     }
