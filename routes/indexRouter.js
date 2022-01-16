@@ -211,8 +211,9 @@ router.post('/post-random-item', async (req,res)=>{
     }
 })
 
-router.delete('/remove-from-inventory', async (req, res)=>{
+router.post('/remove-from-inventory', async (req, res)=>{
     const { itemId, characterId } = req.body
+    console.log('req.body ===========================>',req.body)
     try {
         const item = await Inventory.findOne({where: {item_id: Number(itemId), character_id: Number(characterId)}, raw: true})
         await Inventory.destroy({where: {id: Number(item.id)}})
