@@ -217,8 +217,10 @@ router.post('/remove-from-inventory', async (req, res)=>{
     try {
         const item = await Inventory.findOne({where: {item_id: Number(itemId), character_id: Number(characterId)}, raw: true})
         await Inventory.destroy({where: {id: Number(item.id)}})
+        res.json({message: 'deleted'})
     } catch (e) {
         console.log(e)
+        res.json({message: 'something went wrong'})
     }
 })
 
