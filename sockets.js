@@ -15,23 +15,24 @@ io.on('connection', socket => {
         io.emit('message', {name, message})
     })
 
-    socket.on('join-room', async (room, player, battlePlayer, cb) => {
+    socket.on('join-room', async (room, player, battlePlayer) => {
         try{
         socket.join(room.id)
             const currentRoom = await BattleRoom.findOne({where: {id: Number(room.id)}})
             const arr = []
-            if (Number(currentRoom.initial_character_id) !== Number(player.id)){
-                await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
-                const currentRoom2 = await BattleRoom.findOne({where: {id: Number(room.id)}})
+            if (Number(currentRoom.initial_character_id) === Number(player.id)){
                 arr.push({player,battlePlayer})
-                io.to(room.id).emit('join-room', arr)
+                return io.to(room.id).emit('join-room', arr)
             } else {
                 arr.push({player,battlePlayer})
-                io.to(room.id).emit('join-room', arr)
+                await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
+                const currentRoom2 = await BattleRoom.findOne({where: {id: Number(room.id)}})
+                return io.to(room.id).emit('join-room', arr)
             }
                  // await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
         } catch (e) {
             console.log(e)
+
         }
     })
 
