@@ -33,4 +33,29 @@ router.post('/place-lot', async (req, res) =>{
 
 })
 
+router.post('/filter-items', async (req,res) => {
+    const {value} = req.body
+    try {
+        const response = await Auction.findAll({
+            // attributes: ['id', 'item_id', 'price', 'character_id', 'grade_id', 'item_name', 'type', 'info', 'img'
+            include: {
+                model: Items, where: {type: value}
+            }
+        })
+        // const allItemsRaw = await Auction.findAll({raw: true})
+        // const allItemsIds = allItemsRaw.map(e => e.item_id)
+        // const itemsRaw = []
+        // for ( let i = 0; i < allItemsIds.length; i += 1) {
+        //     itemsRaw.push(await Items.findByPk(allItemsIds[i]))
+        // }
+        // const oneTypeItems = await Items.findAll({where: {id: allItemsIds, type: value}, raw:true})
+        // const oneTypeItemsIds = oneTypeItems.map(e => e.id)
+        // const  = await Auction.findAll({where: {item_id: oneTypeItemsIds}, raw: true})
+        res.json(response)
+    } catch (e) {
+        console.log(e)
+        res.json({message: 'Bad request'})
+    }
+})
+
 module.exports = router
