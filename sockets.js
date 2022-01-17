@@ -13,6 +13,10 @@ const io = new Server(server, {cors: {origin: true}})
 let arr = []
 io.on('connection', socket => {
 
+    socket.on('player-connected', (name) => {
+        io.emit('player-connected', {name})
+    })
+
     socket.on('message', ({name, message}) => {
         io.emit('message', {name, message})
     })
