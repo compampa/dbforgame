@@ -18,7 +18,9 @@ router.post('/place-lot', async (req, res) =>{
     // const character = Character.findByPk(character_id)
     try {
         const characterInventory = await Inventory.findAll({where: {character_id}, raw: true})
+        console.log(characterInventory)
         const inventoryItems = characterInventory.map(e => e.item_id) // TODO REFACTOR
+        console.log(inventoryItems)
         if (inventoryItems.includes(item_id)){
             const getItemFromInventory = await Inventory.findOne({where:{character_id, item_id},raw: true})
             await Inventory.destroy({where:{id: getItemFromInventory.id}})
