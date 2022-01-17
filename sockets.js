@@ -16,6 +16,9 @@ io.on('connection', socket => {
     socket.on('player-connected', (name) => {
         io.emit('player-connected', {name})
     })
+    socket.on('player-disconnected', (name) => {
+        io.emit('player-disconnected', {name})
+    })
 
     socket.on('message', ({name, message}) => {
         io.emit('message', {name, message})
