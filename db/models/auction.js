@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Auction.init({
-    inventory_id: DataTypes.INTEGER,
+    character_id: DataTypes.INTEGER,
     item_id: DataTypes.INTEGER,
     price: DataTypes.INTEGER
   }, {

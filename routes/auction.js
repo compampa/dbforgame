@@ -24,7 +24,7 @@ router.post('/place-lot', async (req, res) =>{
         if (inventoryItems.includes(item_id)){
             const getItemFromInventory = await Inventory.findOne({where:{character_id, item_id},raw: true})
             await Inventory.destroy({where:{id: getItemFromInventory.id}})
-            await Auction.create({item_id, character_id, price})
+            await Auction.create({item_id, character_id: Number(characterInventory[0].character_id), price})
             res.json({message: 'OK'})
         } else return res.json({message: 'something went wrong'})
     } catch (e) {
