@@ -11,13 +11,16 @@ const io = new Server(server, {cors: {origin: true}})
 // const players = []
 
 let arr = []
+let chatPlayers = []
 io.on('connection', socket => {
 
     socket.on('player-connected', (name) => {
-        io.emit('player-connected', {name})
+        chatPlayers.push({name})
+        io.emit('player-connected', chatPlayers)
     })
     socket.on('player-disconnected', (name) => {
-        io.emit('player-disconnected', {name})
+        chatPlayers.forEach(chatPlayer => chatPlayer !== {name})
+        io.emit('player-disconnected', chatPlayers)
     })
 
     socket.on('message', ({name, message}) => {
