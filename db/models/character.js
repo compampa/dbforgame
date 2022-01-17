@@ -22,9 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     Character.init({
         user_id: DataTypes.INTEGER,
         nickname: DataTypes.STRING,
-        // class_id: DataTypes.INTEGER,
-        // lvl: DataTypes.INTEGER,
-        // equip_set: DataTypes.INTEGER,
         balance: DataTypes.INTEGER,
         exp: DataTypes.STRING
     }, {
