@@ -19,7 +19,7 @@ io.on('connection', socket => {
         io.emit('player-connected', chatPlayers)
     })
     socket.on('player-disconnected', (name) => {
-        chatPlayers =  chatPlayers.filter(chatPlayer => chatPlayer !== {name})
+        chatPlayers =  chatPlayers.filter(chatPlayer => chatPlayer.name !== name)
         io.emit('player-disconnected', chatPlayers)
     })
 
