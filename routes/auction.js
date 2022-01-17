@@ -14,7 +14,7 @@ router.get('/', async (req,res)=>{
 
 router.post('/place-lot', async (req, res) =>{
     console.log(req.body)
-    const { item_id, character_id, price } = req.body
+    const { item_id, character_id, price } = req.body.data
     // const character = Character.findByPk(character_id)
     try {
         const characterInventory = await Inventory.findAll({where: {character_id}, raw: true})
