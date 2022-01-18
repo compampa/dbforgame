@@ -9,7 +9,7 @@ const server = http.createServer(app)
 const io = new Server(server, {cors: {origin: true}})
 
 // const players = []
-const storage = [
+let storage = [
     // {
     //  roomId: id,
     //  message: message,
@@ -87,14 +87,15 @@ io.on('connection', socket => {
                 // console.log('TWO')
                 // console.log('**********************************************')
                 io.to(room.id).emit('send-message', ({message, player_two, player_one}))
-                for (let i = 0; i < storage.length; i += 1) {
-                    if(storage[i].id === room.id) {
-                        const index = storage.indexOf(storage[i]);
-                        if (index > -1) {
-                            storage.splice(index, 1);
-                        }
-                    }
-                }
+                // for (let i = 0; i < storage.length; i += 1) {
+                //     if(storage[i].id === room.id) {
+                //         const index = storage.indexOf(storage[i]);
+                //         if (index > -1) {
+                //             storage.splice(index, 1);
+                //         }
+                //     }
+                // }
+                storage = storage.filter(el => el.id !==room.id)
                 battle = []
             }
         }
