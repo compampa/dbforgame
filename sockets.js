@@ -58,13 +58,18 @@ io.on('connection', socket => {
     })
     // let currBattle = []
     socket.on('punch', async (room, player, battlePlayer) => {
+        console.log('+++++++++++++++storage+++++++++++++++++++',storage)
         socket.join(room.id)
         let battle = storage.filter(e => e.id === room.id)
         const player_two = battle.find(e => e.player !== player.id)
+        console.log('player_two===================>',player_two)
         const player_one = battle.find(e => e.player === player.id)
-        const message = 'SUKA BLYAT'
+        console.log('player_one==================>',player_one)
+        const message = 'Holy Christ'
         if (player_one) {
+            console.log('ONE')
             if (player_two){
+                console.log('TWO')
                 io.to(room.id).emit('send-message', ({message, player_two, player_one}))
                 battle = []
             }
