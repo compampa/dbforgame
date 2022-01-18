@@ -53,7 +53,7 @@ io.on('connection', socket => {
         // let currBattle = []
         const currentRoom2 = await BattleRoom.findOne({where: {id: Number(room.id)}})
         currBattle.push({player, battlePlayer})
-        if (currBattle.length >= 1){
+        if (currBattle.length === 2){
             io.to(room.id).emit('punch', {arr, currentRoom2, currBattle})
             currBattle =[]
         }
