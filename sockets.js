@@ -56,7 +56,7 @@ io.on('connection', socket => {
         currBattle.push(temp)
 
         console.log('-----------------------')
-        // console.log('player =======>', player)
+        console.log('player =======>', player.nickName)
         console.log('currBattle======> LENGTH',currBattle.length)
         console.log('-----------------------')
         console.table(currBattle)
