@@ -59,12 +59,12 @@ io.on('connection', socket => {
     // let currBattle = []
     socket.on('punch', async (room, player) => {
         console.log('**********************************************')
-        console.log('+++++++++++++++storage+++++++++++++++++++',storage)
+        console.log('+++++++++++++++storage+++++++++++++++++++',storage.length)
         console.log('**********************************************')
         socket.join(room.id)
         let battle = storage.filter(e => e.id === room.id)
         console.log('**********************************************')
-        console.log('!!!!!!!!!!!!!!!!battle!!!!!!!!!!!!!!!!',battle)
+        // console.log('!!!!!!!!!!!!!!!!battle!!!!!!!!!!!!!!!!',battle)
         console.log('**********************************************')
         const player_two = battle.find(e => e.player.id !== player.id)
         console.log('**********************************************')
