@@ -55,7 +55,7 @@ io.on('connection', socket => {
         currBattle.push({player, battlePlayer})
         if (currBattle.length >= 2){
             io.to(room.id).emit('punch', {arr, currentRoom2, currBattle})
-            // currBattle =[]
+            currBattle =[]
         }
         // io.to(room.id).emit('punch', {arr, currentRoom2, currBattle})
 
