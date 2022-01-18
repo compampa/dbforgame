@@ -47,10 +47,10 @@ io.on('connection', socket => {
 
         }
     })
-
+    let currBattle = []
     socket.on('punch', async (room, player, battlePlayer) => {
         socket.join(room.id)
-        let currBattle = []
+        // let currBattle = []
         const currentRoom2 = await BattleRoom.findOne({where: {id: Number(room.id)}})
         currBattle.push({player, battlePlayer})
         if (currBattle.length >= 2){
