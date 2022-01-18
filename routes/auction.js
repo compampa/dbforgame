@@ -52,6 +52,7 @@ router.post('/buy-item', async (req, res) => {
         const auctionItem = await Auction.findByPk(Number(id))
         const customer = await Character.findByPk(Number(buyer_id))
         const seller = await Character.findByPk(Number(auctionItem.character_id))
+        if (customer.id !== seller.id) {
         if (customer.balance > auctionItem.price) {
             const newCustomerBalance = customer.balance - auctionItem.price
             const newSellerBalance = seller.balance + auctionItem.price
@@ -62,11 +63,13 @@ router.post('/buy-item', async (req, res) => {
                 {balance: newSellerBalance},
                 {where: {id: seller.id}})
             await Auction.destroy({where: {id: auctionItem.id}})
-            const newItem = await Inventory.create(
+            await Inventory.create(
                 {character_id: customer.id,
                         item_id: auctionItem.item_id})
-            res.json(newItem)
+            const item = Items.findByPk(Number(auctionItem.item_id))
+            res.json(item)
         } else return res.json({message: 'do not enough money'})
+        } else return res.json({message: 'this is your item, you cant buy it'})
     } catch (e) {
         console.log(e)
     }
