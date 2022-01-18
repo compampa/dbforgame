@@ -66,8 +66,7 @@ router.post('/buy-item', async (req, res) => {
             const inventory = await Inventory.create(
                 {character_id: customer.id,
                         item_id: auctionItem.item_id})
-            const item = Items.findByPk(Number(inventory.item_id))
-            console.log('ITEM!!!!!!!!!!!!!!!!!!=>>>>',item)
+            const item = await Items.findByPk(Number(inventory.item_id))
             res.json(item)
         } else return res.json({message: 'do not enough money'})
         } else return res.json({message: 'this is your item, you cant buy it'})
