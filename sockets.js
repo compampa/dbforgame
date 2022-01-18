@@ -59,7 +59,7 @@ io.on('connection', socket => {
         console.log('player =======>', player.nickName)
         console.log('currBattle======> LENGTH',currBattle.length)
         console.log('-----------------------')
-        console.table(currBattle[0].player.nickName, currBattle[0].player.id)
+        console.table(currBattle)
         console.log('-----------------------')
         // if (currBattle.length === 2){
             io.to(room.id).emit('both_punch', {currBattle})
