@@ -53,9 +53,14 @@ io.on('connection', socket => {
         // let currBattle = []
         const currentRoom2 = await BattleRoom.findOne({where: {id: Number(room.id)}})
         currBattle.push({player, battlePlayer})
+        console.log('-----------------------')
+        console.log('player =======>', player)
+        console.log('currBattle======>',currBattle)
+        console.log('-----------------------')
         if (currBattle.length === 2){
-            io.broadcast.to(room.id).emit('punch', {currBattle})
+            io.to(room.id).emit('punch', {currBattle})
             currBattle =[]
+            console.log('currbattle refresh')
         }
         // io.to(room.id).emit('punch', {arr, currentRoom2, currBattle})
 
