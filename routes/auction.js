@@ -8,7 +8,8 @@ const {
 } = require('../db/models')
 
 router.get('/', async (req,res)=>{
-    const allItems = await Auction.findAll({raw: true})
+    // const allItems = await Auction.findAll({raw: true})
+    const allItems = await getItemsForFront()
     res.json({allItems})
 })
 
@@ -36,44 +37,8 @@ router.post('/place-lot', async (req, res) =>{
 router.post('/filter-items', async (req,res) => {
     const {value} = req.body
     try {
-        const response = await Auction.findAll()
-        const responseWithoutFilter = []
-        for (let i = 0; i < response.length; i += 1) {
-            const item = await Items.findOne({where: {id: response[i].item_id}, raw: true})
-            responseWithoutFilter.push({
-                auction_id: response[i].id,
-                character_id: response[i].character_id,
-                item_id: response[i].item_id,
-                grade_id: item.grade_id,
-                item_name: item.item_name,
-                type: item.type,
-                info: item.info,
-                img: item.img,
-                auction_price: response[i].price,
-                regular_price: item.price
-            })
-        }
+        const responseWithoutFilter = await getItemsForFront()
         const serverResponse = responseWithoutFilter.filter(e => e.type === value)
-            // attributes: ['id', 'item_id', 'price', 'character_id', 'grade_id', 'item_name', 'type', 'info', 'img'
-            // include: [{
-            //     model: Character,
-            //     through: {
-            //         model: Equipment,
-            //         // where: { type: value}
-            //     }
-                // where: {type: value}
-        //     }],
-        //     where: {type: value},
-        // })
-        // const allItemsRaw = await Auction.findAll({raw: true})
-        // const allItemsIds = allItemsRaw.map(e => e.item_id)
-        // const itemsRaw = []
-        // for ( let i = 0; i < allItemsIds.length; i += 1) {
-        //     itemsRaw.push(await Items.findByPk(allItemsIds[i]))
-        // }
-        // const oneTypeItems = await Items.findAll({where: {id: allItemsIds, type: value}, raw:true})
-        // const oneTypeItemsIds = oneTypeItems.map(e => e.id)
-        // const  = await Auction.findAll({where: {item_id: oneTypeItemsIds}, raw: true})
         res.json(serverResponse)
     } catch (e) {
         console.log(e)
@@ -82,3 +47,33 @@ router.post('/filter-items', async (req,res) => {
 })
 
 module.exports = router
+
+async function getItemsForFront() {
+    const response = await Auction.findAll()
+    const responseWithoutFilter = []
+    for (let i = 0; i < response.length; i += 1) {
+        const item = await Items.findOne({where: {id: response[i].item_id}, raw: true})
+        const stats = await Parameter.findOne({where: {id: item.grade_id},raw:true})
+        responseWithoutFilter.push({
+            auction_id: response[i].id,
+            character_id: response[i].character_id,
+            item_id: response[i].item_id,
+            grade_id: item.grade_id,
+            item_name: item.item_name,
+            type: item.type,
+            info: item.info,
+            img: item.img,
+            auction_price: response[i].price,
+            regular_price: item.price,
+            stats: {
+                str: stats.str,
+                agl: stats.agl,
+                int: stats.int,
+                def: stats.def,
+                evs: stats.evs,
+                dmg: stats.dmg
+            }
+        })
+    }
+    return responseWithoutFilter
+}
