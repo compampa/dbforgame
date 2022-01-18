@@ -46,6 +46,32 @@ router.post('/filter-items', async (req,res) => {
     }
 })
 
+router.post('/buy-item', async (req, res) => {
+    const {id, buyer_id} = req.body
+    try {
+        const auctionItem = await Auction.findByPk(Number(id))
+        const customer = await Character.findByPk(Number(buyer_id))
+        const seller = await Character.findByPk(Number(auctionItem.character_id))
+        if (customer.balance > auctionItem.price) {
+            const newCustomerBalance = customer.balance - auctionItem.price
+            const newSellerBalance = seller.balance + auctionItem.price
+            await Character.update(
+                {balance: newCustomerBalance},
+                {where: {id: customer.id}})
+            await Character.update(
+                {balance: newSellerBalance},
+                {where: {id: seller.id}})
+            await Auction.destroy({where: {id: auctionItem.id}})
+            const newItem = await Inventory.create(
+                {character_id: customer.id,
+                        item_id: auctionItem.item_id})
+            res.json(newItem)
+        } else return res.json({message: 'do not enough money'})
+    } catch (e) {
+        console.log(e)
+    }
+})
+
 module.exports = router
 
 async function getItemsForFront() {
