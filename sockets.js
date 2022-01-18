@@ -47,10 +47,10 @@ io.on('connection', socket => {
 
         }
     })
-    let currBattle = []
+    // let currBattle = []
     socket.on('punch', async (room, player, battlePlayer) => {
         socket.join(room.id)
-        // let currBattle = []
+        let currBattle = []
         const temp = {player, battlePlayer}
 
         currBattle.push(temp)
@@ -62,7 +62,7 @@ io.on('connection', socket => {
         console.table(currBattle)
         console.log('-----------------------')
         if (currBattle.length === 2){
-            io.to(room.id).emit('punch', {currBattle})
+            io.to(room.id).emit('both_punch', {currBattle})
             // currBattle =[]
             console.log('=======================')
             console.log('currbattle refresh')
