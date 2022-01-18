@@ -13,12 +13,15 @@ router.post('/en', async (req, res) =>{
         const phrases = await hitens.findAll({where: {body_part, type_of_action}, raw: true})
         //{where: {body_part, type_of_action}, raw: true}
         const phrase = phrases[getRandomNumber(0, phrases.length - 1)]
-        await BattleLog.create({
+        const battleLog = await BattleLog.create({
             battle_room_id: Number(db_room.id),
             hit_id: Number(phrase.id),
             player_id: Number(player_id)
         })
-        res.json(phrases[getRandomNumber(0, phrases.length - 1)])
+        res.json({
+            phrase: phrases[getRandomNumber(0, phrases.length - 1)],
+            battleLog
+        })
     } catch (e) {
         console.log(e)
     }
