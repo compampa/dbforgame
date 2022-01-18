@@ -51,7 +51,7 @@ io.on('connection', socket => {
     socket.on('punch', async (room, player, battlePlayer) => {
         socket.join(room.id)
         const message = 'SUKA BLYAT'
-        room.emit('send-message', message)
+        io.to(room.id).emit('send-message', message)
         let currBattle = []
         const temp = {player, battlePlayer}
 
