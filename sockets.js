@@ -84,6 +84,14 @@ io.on('connection', socket => {
                 console.log('TWO')
                 console.log('**********************************************')
                 io.to(room.id).emit('send-message', ({message, player_two, player_one}))
+                for (let i = 0; i < storage.length; i += 1) {
+                    if(storage[i].id === room.id) {
+                        const index = storage.indexOf(storage[i]);
+                        if (index > -1) {
+                            storage.splice(index, 1);
+                        }
+                    }
+                }
                 battle = []
             }
         }
