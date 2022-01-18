@@ -9,7 +9,13 @@ const server = http.createServer(app)
 const io = new Server(server, {cors: {origin: true}})
 
 // const players = []
-
+const storage = [
+    // {
+    //  roomId: id,
+    //  message: message,
+    //  player: playerId
+    // }
+]
 let arr = []
 let chatPlayers = []
 io.on('connection', socket => {
@@ -47,28 +53,43 @@ io.on('connection', socket => {
 
         }
     })
+    socket.on('to_instance', ({id, player}) => {
+        storage.push({id, player})
+    })
     // let currBattle = []
     socket.on('punch', async (room, player, battlePlayer) => {
         socket.join(room.id)
+        let battle = storage.filter(e => e.id === room.id)
+        const player_two = battle.find(e => e.player !== player.id)
+        const player_one = battle.find(e => e.player === player.id)
         const message = 'SUKA BLYAT'
-        io.to(room.id).emit('send-message', message)
-        let currBattle = []
-        const temp = {player, battlePlayer}
+        if (player_one) {
+            if (player_two){
+                io.to(room.id).emit('send-message', ({message, player_two, player_one}))
+                battle = []
+            }
+        }
 
-        currBattle.push(temp)
 
-        console.log('-----------------------')
-        console.log('player =======>', player.nickName)
-        console.log('currBattle======> LENGTH',currBattle.length)
-        console.log('-----------------------')
-        console.table(currBattle)
-        console.log('-----------------------')
+
+        // let currBattle = []
+        // const temp = {player, battlePlayer}
+        //
+        // currBattle.push(temp)
+        //
+        // console.log('-----------------------')
+        // console.log('player =======>', player.nickName)
+        // console.log('currBattle======> LENGTH',currBattle.length)
+        // console.log('-----------------------')
+        // console.table(currBattle)
+        // console.log('-----------------------')
+
         // if (currBattle.length === 2){
-            io.to(room.id).emit('ready-to-hit', {currBattle})
+        //     io.to(room.id).emit('ready-to-hit', {currBattle})
             // currBattle =[]
-            console.log('=======================')
-            console.log('currbattle refresh')
-            console.log('=======================')
+            // console.log('=======================')
+            // console.log('currbattle refresh')
+            // console.log('=======================')
         // }
         // io.to(room.id).emit('punch', {arr, currentRoom2, currBattle})
 
