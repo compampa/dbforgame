@@ -59,9 +59,11 @@ io.on('connection', socket => {
         // console.log('player =======>', player)
         console.log('currBattle======> LENGTH',currBattle.length)
         console.log('-----------------------')
+        console.table(currBattle)
+        console.log('-----------------------')
         if (currBattle.length === 2){
             io.to(room.id).emit('punch', {currBattle})
-            currBattle =[]
+            // currBattle =[]
             console.log('=======================')
             console.log('currbattle refresh')
             console.log('=======================')
