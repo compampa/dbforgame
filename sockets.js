@@ -53,23 +53,36 @@ io.on('connection', socket => {
 
         }
     })
-    socket.on('to_instance', ({id, player}) => {
-        storage.push({id, player})
+    socket.on('to_instance', ({id, player, battlePlayer}) => {
+        storage.push({id, player, battlePlayer})
     })
     // let currBattle = []
-    socket.on('punch', async (room, player, battlePlayer) => {
+    socket.on('punch', async (room, player) => {
+        console.log('**********************************************')
         console.log('+++++++++++++++storage+++++++++++++++++++',storage)
+        console.log('**********************************************')
         socket.join(room.id)
         let battle = storage.filter(e => e.id === room.id)
-        const player_two = battle.find(e => e.player !== player.id)
+        console.log('**********************************************')
+        console.log('!!!!!!!!!!!!!!!!battle!!!!!!!!!!!!!!!!',battle)
+        console.log('**********************************************')
+        const player_two = battle.find(e => e.player.id !== player.id)
+        console.log('**********************************************')
         console.log('player_two===================>',player_two)
-        const player_one = battle.find(e => e.player === player.id)
+        console.log('**********************************************')
+        const player_one = battle.find(e => e.player.id === player.id)
+        console.log('**********************************************')
         console.log('player_one==================>',player_one)
+        console.log('**********************************************')
         const message = 'Holy Christ'
         if (player_one) {
+            console.log('**********************************************')
             console.log('ONE')
+            console.log('**********************************************')
             if (player_two){
+                console.log('**********************************************')
                 console.log('TWO')
+                console.log('**********************************************')
                 io.to(room.id).emit('send-message', ({message, player_two, player_one}))
                 battle = []
             }
