@@ -59,15 +59,15 @@ io.on('connection', socket => {
         console.log('player =======>', player.nickName)
         console.log('currBattle======> LENGTH',currBattle.length)
         console.log('-----------------------')
-        console.table(currBattle)
+        console.table(currBattle[0].player.nickName, currBattle[0].player.id)
         console.log('-----------------------')
-        if (currBattle.length === 2){
+        // if (currBattle.length === 2){
             io.to(room.id).emit('both_punch', {currBattle})
             // currBattle =[]
             console.log('=======================')
             console.log('currbattle refresh')
             console.log('=======================')
-        }
+        // }
         // io.to(room.id).emit('punch', {arr, currentRoom2, currBattle})
 
     })
