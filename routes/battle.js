@@ -46,15 +46,15 @@ router.post('/get-reward', async (req,res)=> {
 
 })
 
-router.get('/watch-battle/:id', async (req,res)=> {
-    const { id } = req.params
-    try {
-        const room = BattleRoom.findByPk(Number(id))
-        return res.json(room)
-    } catch (e) {
-        console.log(e)
-    }
-})
+// router.get('/watch-battle/:id', async (req,res)=> {
+//     const { id } = req.params
+//     try {
+//         const room = BattleRoom.findByPk(Number(id))
+//         return res.json(room)
+//     } catch (e) {
+//         console.log(e)
+//     }
+// })
 
 router()
 
