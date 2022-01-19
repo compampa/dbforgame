@@ -51,12 +51,22 @@ io.on('connection', socket => {
         try {
             socket.join(roomId)
             const currentRoom = await BattleRoom.findOne({where: {id: Number(roomId)}})
+            console.log('============================================')
+            console.log('room============>',currentRoom)
+            console.log('============================================')
+
             const initial_character = arr.find(e => {
                 return (e.player.id === currentRoom.initial_character_id)
             })
+            console.log('============================================')
+            console.log('initial_character============>',initial_character)
+            console.log('============================================')
             const opponent = arr.find(e => {
                 return (e.player.id === currentRoom.opponent_id)
             })
+            console.log('============================================')
+            console.log('opponent============>',opponent)
+            console.log('============================================')
             socket.to(roomId).emit('join-room-watcher',
                 {current_room: currentRoom.id, initial_character, opponent})
             // if (Number(currentRoom.initial_character_id) === Number(player.id)) {
