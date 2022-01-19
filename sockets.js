@@ -47,17 +47,17 @@ io.on('connection', socket => {
 
         }
     })
-    socket.on('join-room-watcher', async (room, player) => {
+    socket.on('join-room-watcher', async (roomId, player) => {
         try {
-            socket.join(room.id)
-            const currentRoom = await BattleRoom.findOne({where: {id: Number(room.id)}})
+            socket.join(roomId)
+            const currentRoom = await BattleRoom.findOne({where: {id: Number(roomId)}})
             const initial_character = arr.find(e => {
                 return (e.player.id === currentRoom.initial_character_id)
             })
             const opponent = arr.find(e => {
                 return (e.player.id === currentRoom.opponent_id)
             })
-            socket.to(room.id).emit('join-room-watcher',
+            socket.to(roomId).emit('join-room-watcher',
                 {current_room: currentRoom.id, initial_character, opponent})
             // if (Number(currentRoom.initial_character_id) === Number(player.id)) {
             //     arr.push({player})
@@ -87,7 +87,10 @@ io.on('connection', socket => {
         if (player_one) {
             if (player_two){
                 const db_room = await BattleRoom.findByPk(Number(room.id))
-                io.to(room.id).emit('send-message', ({message, db_room, player_two, player_one}))
+                io.to(room.id).emit('send-message',
+                    ({message, db_room, player_two, player_one}))
+                io.to(room.id).emit('send-message-to-watcher',
+                    ({message, db_room, player_two, player_one}))
                 storage = storage.filter(el => el.id !==room.id)
                 battle = []
             }
@@ -97,6 +100,7 @@ io.on('connection', socket => {
     socket.on('close-private-room', (room, playerFromFront) => {
         arr = arr.filter(client => playerFromFront.id !== client.player.id)
         socket.to(room.id).emit('close-private-room')
+        socket.to(room.id).emit('close-private-room-for-watcher')
     })
 
 })
