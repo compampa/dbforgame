@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node port.js"
+    "start" : "node port.js",
+    "web" : "node port.js"
   },
   "repository": {
     "type": "git",
