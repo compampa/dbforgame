@@ -56,7 +56,7 @@ router.post('/get-reward', async (req,res)=> {
 //     }
 // })
 
-router()
+// router()
 
 module.exports = router
 
