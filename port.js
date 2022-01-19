@@ -1,4 +1,4 @@
-require('dotenv').config()
+
 const server = require('./sockets')
 
 const PORT = process.env.PORT || 8000 //  process.env.PORT || 8000
