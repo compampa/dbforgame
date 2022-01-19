@@ -11,13 +11,13 @@ module.exports = {
          *   isBetaMember: false
          * }], {});
          */
-        await queryInterface.bulkInsert('Inventories', [
-            {character_id: 1, item_id: 1, createdAt: new Date(), updatedAt: new Date()},
-            {character_id: 1, item_id: 2, createdAt: new Date(), updatedAt: new Date()},
-            {character_id: 1, item_id: 2, createdAt: new Date(), updatedAt: new Date()},
-            {character_id: 1, item_id: 3, createdAt: new Date(), updatedAt: new Date()},
-            {character_id: 1, item_id: 4, createdAt: new Date(), updatedAt: new Date()},
-        ], {});
+        // await queryInterface.bulkInsert('Inventories', [
+            // {character_id: 1, item_id: 1, createdAt: new Date(), updatedAt: new Date()},
+            // {character_id: 1, item_id: 2, createdAt: new Date(), updatedAt: new Date()},
+            // {character_id: 1, item_id: 2, createdAt: new Date(), updatedAt: new Date()},
+            // {character_id: 1, item_id: 3, createdAt: new Date(), updatedAt: new Date()},
+            // {character_id: 1, item_id: 4, createdAt: new Date(), updatedAt: new Date()},
+        // ], {});
     },
 
     down: async (queryInterface, Sequelize) => {

@@ -79,7 +79,7 @@ router.get('/ready-for-fun/:id', async (req, res) => {
         }
         return res.json({
             armor_set, accessories_set, weapon, total_stats, nickName,
-            id, lvl, exp, hp, mp, ap, playerClass, avatar
+            id, lvl, exp, hp, mp, ap, playerClass, avatar, balance: tempCharacter.balance
         })
     } catch (e) {
         console.log(e);
@@ -186,7 +186,7 @@ router.post('/set-player-class', async (req, res) => {
             const avatar = total_stats.avatar
             return res.json({
                 armor_set, accessories_set, weapon, total_stats, nickName,
-                id, lvl, exp, hp, mp, ap, playerClass, avatar
+                id, lvl, exp, hp, mp, ap, playerClass, avatar, balance: character.balance
             })
 // CHECK
             // await Classes.create({player_class_id: class_id, character_id: character.id})

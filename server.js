@@ -8,6 +8,7 @@ const errorMiddleware = require('./src/middlewares/errorMiddleware')
 const router = require('./routes/indexRouter');
 const auctionRouter = require('./routes/auction')
 const battleRouter = require('./routes/battle')
+const inventoryRouter = require('./routes/inventory')
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'build')))
@@ -18,6 +19,7 @@ app.use(cookieParser());
 
 app.use('/db', router);
 app.use('/api', index)
+app.use('/inventory', inventoryRouter)
 app.use('/auction', auctionRouter)
 app.use('/battle', battleRouter)
 app.get('/*', (req, res) => {
