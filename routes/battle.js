@@ -27,6 +27,23 @@ router.post('/en', async (req, res) =>{
     }
 })
 
+router.post('/get-reward', async (req,res)=> {
+                        // true & false
+    const {playerId, WinOrLoss} = req.body
+    const player = await Character.findByPk(Number(playerId), {raw:true})
+    const currentBalance = player.balance
+    const currentExp = player.exp
+    if (WinOrLoss) {
+        await Character.update({balance: currentBalance + 100,
+        exp: currentExp + 25}, {where: {id: player.id}})
+    } else  {
+        await Character.update({balance: currentBalance + 10,
+            exp: currentExp + 5}, {where: {id: player.id}})
+    }
+    const response = await Character.findByPk(Number(player.id))
+    return res.json(response)
+
+})
 
 module.exports = router
 
