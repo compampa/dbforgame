@@ -131,13 +131,34 @@ router.get('/enter-exact-room/:id', async (req,res)=>{
 })
 
 router.get('/get-active-rooms', async (req, res) => {
-    const rooms = await BattleRoom.findAll({where: {description: 'active'}, raw: true})
+    try {
+    const rooms = await BattleRoom.findAll({where: {description: 'active'},
+        raw: true})
+
     res.json(rooms)
+} catch (e) {
+    console.log(e)
+}
 })
 
 router.get('/get-idle-rooms', async (req, res) => {
-    const rooms = await BattleRoom.findAll({where: {description: 'idle'}, raw: true})
+    try {
+    const rooms = await BattleRoom.findAll({where: {description: 'idle'},
+        raw: true})
     res.json(rooms)
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+router.post('/close-battle-room', async (req, res) => {
+    const { id } = req.body
+    try {
+        await BattleRoom.update({description: 'closed'},{where: {id: Number(id)}})
+        res.json({message: `room ${id} closed`})
+    } catch (e) {
+        console.log(e)
+    }
 })
 
 router.post('/sell-items', async (req, res) => {
