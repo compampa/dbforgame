@@ -9,13 +9,7 @@ const server = http.createServer(app)
 const io = new Server(server, {cors: {origin: true}})
 
 // const players = []
-let storage = [
-    // {
-    //  roomId: id,
-    //  message: message,
-    //  player: playerId
-    // }
-]
+let storage = []
 let arr = []
 let chatPlayers = []
 io.on('connection', socket => {
@@ -75,7 +69,7 @@ io.on('connection', socket => {
     })
     socket.on('close-private-room', (room, playerFromFront) => {
         arr = arr.filter(client => playerFromFront.id !== client.player.id)
-        socket.to(room.id).emit('close-private-room')
+        // socket.to(room.id).emit('close-private-room')
     })
 
 })
