@@ -29,7 +29,7 @@ router.post('/en', async (req, res) =>{
 
 router.post('/get-reward', async (req,res)=> {
                         // true & false
-    const {playerId, WinOrLoss} = req.body
+    const {playerId, WinOrLoss, room} = req.body
     const player = await Character.findByPk(Number(playerId), {raw:true})
     const currentBalance = player.balance
     const currentExp = player.exp
@@ -41,9 +41,22 @@ router.post('/get-reward', async (req,res)=> {
             exp: currentExp + 5}, {where: {id: player.id}})
     }
     const response = await Character.findByPk(Number(player.id))
+    await BattleRoom.update({description: 'closed'}, {where:{id: Number(room.id)}})
     return res.json(response)
 
 })
+
+router.get('/watch-battle/:id', async (req,res)=> {
+    const { id } = req.params
+    try {
+        const room = BattleRoom.findByPk(Number(id))
+        return res.json(room)
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+router()
 
 module.exports = router
 
