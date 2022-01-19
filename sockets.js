@@ -47,6 +47,33 @@ io.on('connection', socket => {
 
         }
     })
+    socket.on('join-room-watcher', async (room, player) => {
+        try {
+            socket.join(room.id)
+            const currentRoom = await BattleRoom.findOne({where: {id: Number(room.id)}})
+            const initial_character = arr.find(e => {
+                return (e.player.id === currentRoom.initial_character_id)
+            })
+            const opponent = arr.find(e => {
+                return (e.player.id === currentRoom.opponent_id)
+            })
+            socket.to(room.id).emit('join-room-watcher',
+                {current_room: currentRoom.id, initial_character, opponent})
+            // if (Number(currentRoom.initial_character_id) === Number(player.id)) {
+            //     arr.push({player})
+            //     io.to(room.id).emit('join-room', arr)
+            // } else {
+            //     arr.push({player, battlePlayer})
+            //     await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
+            //     const currentRoom2 = await BattleRoom.findOne({where: {id: Number(room.id)}})
+            //     io.to(room.id).emit('join-room', {arr, currentRoom2})
+            // }
+            // await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
+        } catch (e) {
+            console.log(e)
+
+        }
+    })
     socket.on('to_instance', ({id, player, battlePlayer}) => {
         storage.push({id, player, battlePlayer})
     })
