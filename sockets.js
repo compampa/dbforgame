@@ -58,75 +58,24 @@ io.on('connection', socket => {
     })
     // let currBattle = []
     socket.on('punch', async (room, player) => {
-        console.log('**********************************************')
-        console.log('+++++++++++++++storage+++++++++++++++++++',storage.length)
-        console.log('**********************************************')
-        console.log('+++++++++++++++storage+++++++++++++++++++',storage)
-        console.log('**********************************************')
-
         socket.join(room.id)
         let battle = storage.filter(e => e.id === room.id)
-        // console.log('**********************************************')
-        // // console.log('!!!!!!!!!!!!!!!!battle!!!!!!!!!!!!!!!!',battle)
-        // console.log('**********************************************')
         const player_two = battle.find(e => e.player.id !== player.id)
-        // console.log('**********************************************')
-        // console.log('player_two===================>',player_two)
-        // console.log('**********************************************')
         const player_one = battle.find(e => e.player.id === player.id)
-        // console.log('**********************************************')
-        // console.log('player_one==================>',player_one)
-        // console.log('**********************************************')
         const message = 'Holy Christ'
         if (player_one) {
-            // console.log('**********************************************')
-            // console.log('ONE')
-            // console.log('**********************************************')
             if (player_two){
-                // console.log('**********************************************')
-                // console.log('TWO')
-                // console.log('**********************************************')
                 const db_room = await BattleRoom.findByPk(Number(room.id))
                 io.to(room.id).emit('send-message', ({message, db_room, player_two, player_one}))
-                // for (let i = 0; i < storage.length; i += 1) {
-                //     if(storage[i].id === room.id) {
-                //         const index = storage.indexOf(storage[i]);
-                //         if (index > -1) {
-                //             storage.splice(index, 1);
-                //         }
-                //     }
-                // }
                 storage = storage.filter(el => el.id !==room.id)
                 battle = []
             }
         }
 
-
-
-        // let currBattle = []
-        // const temp = {player, battlePlayer}
-        //
-        // currBattle.push(temp)
-        //
-        // console.log('-----------------------')
-        // console.log('player =======>', player.nickName)
-        // console.log('currBattle======> LENGTH',currBattle.length)
-        // console.log('-----------------------')
-        // console.table(currBattle)
-        // console.log('-----------------------')
-
-        // if (currBattle.length === 2){
-        //     io.to(room.id).emit('ready-to-hit', {currBattle})
-            // currBattle =[]
-            // console.log('=======================')
-            // console.log('currbattle refresh')
-            // console.log('=======================')
-        // }
-        // io.to(room.id).emit('punch', {arr, currentRoom2, currBattle})
-
     })
-    socket.on('close-private-room', (playerFromFront) => {
+    socket.on('close-private-room', (room, playerFromFront) => {
         arr = arr.filter(client => playerFromFront.id !== client.player.id)
+        socket.to(room.id).emit('close-private-room')
     })
 
 })
