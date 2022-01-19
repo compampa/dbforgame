@@ -131,7 +131,7 @@ router.get('/enter-exact-room/:id', async (req,res)=>{
 })
 
 router.get('/get-active-rooms', async (req, res) => {
-    const rooms = await BattleRoom.findAll({where: {status: 'active'}, raw: true})
+    const rooms = await BattleRoom.findAll({where: {description: 'active'}, raw: true})
     res.json(rooms)
 })
 
