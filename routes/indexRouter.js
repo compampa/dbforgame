@@ -105,17 +105,17 @@ router.get('/get-mob-current-lvl/:id', async (req, res) => {
 
 router.post('/post-battle-room', async (req, res) => {
     try {
-    const check = await BattleRoom.findOne({
-        where:
-            {[Op.or]:[{initial_character_id: req.body.id}, {opponent_id: req.body.id}]},
-        raw:true})
+    // const check = await BattleRoom.findOne({
+    //     where:
+    //         {[Op.or]:[{initial_character_id: req.body.id}, {opponent_id: req.body.id}]},
+    //     raw:true})
+    //
+    // if (!check){
 
-    if (!check){
-
-    await BattleRoom.create({initial_character_id: req.body.id, description: 'idle'})
-        const room = await BattleRoom.findOne({where: {initial_character_id: req.body.id}})
+        const room = await BattleRoom.create({initial_character_id: req.body.id, description: 'idle'})
+        // const room = await BattleRoom.findOne({where: {initial_character_id: req.body.id}})
     res.json({id: room.id})
-    } else return res.json({message: "player already in battle"})
+    // } else return res.json({message: "player already in battle"})
     } catch (e) {
         console.log(e)
     }
