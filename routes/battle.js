@@ -61,6 +61,7 @@ router.post('/get-mob-reward', async (req,res)=> {
             exp: currentExp + 5}, {where: {id: player.id}})
     }
     const response = await Character.findByPk(Number(player.id))
+    console.log('response ===============>',response);
     return res.json(response)
 })
 
