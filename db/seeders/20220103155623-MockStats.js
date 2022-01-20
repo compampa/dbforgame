@@ -23,7 +23,7 @@ module.exports = {
             {str: 45, agl: 10, int: 6, evs: 12, def: 40, dmg: 21, hp: 180, mp: 30, ap: 200, desc: 'warrior 9', createdAt: new Date(), updatedAt: new Date()},
             {str: 55, agl: 12, int: 7, evs: 14, def: 45, dmg: 23, hp: 200, mp: 40, ap: 220, desc: 'warrior 10', createdAt: new Date(), updatedAt: new Date()},
             // ASSASSIN
-            {str: 2, agl: 8, int: 2, evs: 2, def: 1, dmg: 3, hp: 25, mp: 20, ap: 40, desc: 'assassin 1', createdAt: new Date(), updatedAt: new Date()},
+            {str: 2, agl: 8, int: 2, evs: 2, def: 2, dmg: 3, hp: 25, mp: 20, ap: 40, desc: 'assassin 1', createdAt: new Date(), updatedAt: new Date()},
             {str: 4, agl: 12, int: 2, evs: 7, def: 3, dmg: 6, hp: 35, mp: 20, ap: 70, desc: 'assassin 2', createdAt: new Date(), updatedAt: new Date()},
             {str: 5, agl: 16, int: 2, evs: 14, def: 6, dmg: 8, hp: 45, mp: 20, ap: 100, desc: 'assassin 3', createdAt: new Date(), updatedAt: new Date()},
             {str: 6, agl: 21, int: 3, evs: 21, def: 9, dmg: 9, hp: 55, mp: 25, ap: 140, desc: 'assassin 4', createdAt: new Date(), updatedAt: new Date()},
@@ -34,7 +34,7 @@ module.exports = {
             {str: 15, agl: 46, int: 5, evs: 56, def: 22, dmg: 16, hp: 118, mp: 30, ap: 310, desc: 'assassin 9', createdAt: new Date(), updatedAt: new Date()},
             {str: 18, agl: 60, int: 5, evs: 70, def: 23, dmg: 18, hp: 130, mp: 30, ap: 350, desc: 'assassin 10', createdAt: new Date(), updatedAt: new Date()},
             // MONK
-            {str: 3, agl: 3, int: 4, evs: 2, def: 1, dmg: 3, hp: 30, mp: 40, ap: 35, desc: 'monk 1', createdAt: new Date(), updatedAt: new Date()},
+            {str: 3, agl: 3, int: 4, evs: 2, def: 3, dmg: 3, hp: 30, mp: 40, ap: 35, desc: 'monk 1', createdAt: new Date(), updatedAt: new Date()},
             {str: 6, agl: 6, int: 6, evs: 4, def: 4, dmg: 5, hp: 42, mp: 45, ap: 55, desc: 'monk 2', createdAt: new Date(), updatedAt: new Date()},
             {str: 9, agl: 9, int: 9, evs: 10, def: 8, dmg: 7, hp: 50, mp: 50, ap: 80, desc: 'monk 3', createdAt: new Date(), updatedAt: new Date()},
             {str: 12, agl: 12, int: 12, evs: 16, def: 12, dmg: 10, hp: 53, mp: 55, ap: 120, desc: 'monk 4', createdAt: new Date(), updatedAt: new Date()},

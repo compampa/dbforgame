@@ -6,6 +6,7 @@ const {
     Equipment, PlayerClass, Classes, CharacterStats, LEVELS,
     CurrentCondition, Creep, CreepInventory, BattleRoom, Auction
 } = require('../db/models')
+const {noRawAttributes} = require("sequelize/lib/utils/deprecations");
 
 router.get('/', async (req,res)=>{
     // const allItems = await Auction.findAll({raw: true})
@@ -70,6 +71,30 @@ router.post('/buy-item', async (req, res) => {
             res.json(item)
         } else return res.json({message: 'do not enough money'})
         } else return res.json({message: 'this is your item, you cant buy it'})
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+router.post('/merchant-for-sale', async (req, res) => {
+    const {id} = req.body
+    try {
+        const items = await Items.findAll({raw:true})
+        const itemsRaw = []
+        for (let i = 0; i < items.length; i += 1) {
+            const grade = await Grade.findByPk(Number(items[i].grade_id))
+            const stats = await Parameter.findByPk(Number(grade.stat_id))
+            itemsRaw.push(
+                {
+                    ...items[i],
+                    grade: grade.title,
+                    ...stats.dataValues
+                }
+            )
+        }
+        // const temp = await Items.findAll({})
+        console.log(itemsRaw)
+        res.json(itemsRaw)
     } catch (e) {
         console.log(e)
     }

@@ -96,11 +96,14 @@ router.get('/get-mob-current-lvl/:id', async (req, res) => {
     const tempCreep = await Creep.create({class_id: creepClass.id, creep_inventory_id: character.id})
     const items = await Items.findAll({raw: true})
     const drop = items[Math.floor(Math.random() * items.length)]
+    console.log('DROP=============>', drop)
+    const loot = await Items.findByPk(Number(drop.id))
+    console.log('LOOT=============>', loot)
     const money = getRandomNumber((lvl * 5), (lvl * 9))
     const exp = getRandomNumber(lvl, (lvl * 4))
-    const bag = await CreepInventory.create({creep_id: tempCreep.id, item_id: drop.id, cash: money, exp: exp})
+    const reward = await CreepInventory.create({creep_id: tempCreep.id, item_id: drop.id, cash: money, exp: exp})
     // const bag = await Items.findByPk(tempInventory.id, {raw: true})
-    res.json({creepClass, creepStats, bag})
+    res.json({creepClass, creepStats, loot, exp, money})
 })
 
 router.post('/post-battle-room', async (req, res) => {

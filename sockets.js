@@ -49,7 +49,7 @@ io.on('connection', socket => {
     })
     socket.on('join-room-watcher', async (roomId, player) => {
         try {
-            socket.join(roomId)
+            socket.join(Number(roomId))
             const currentRoom = await BattleRoom.findOne({where: {id: Number(roomId)}})
             console.log('============================================')
             console.log('room============>',currentRoom)
