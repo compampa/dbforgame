@@ -35,7 +35,7 @@ router.post('/get-reward', async (req,res)=> {
     const currentExp = player.exp
     if (WinOrLoss) {
         await Character.update({balance: currentBalance + 100,
-        exp: currentExp + 25}, {where: {id: player.id}})
+        exp: currentExp + 30}, {where: {id: player.id}})
     } else  {
         await Character.update({balance: currentBalance + 10,
             exp: currentExp + 5}, {where: {id: player.id}})
@@ -43,7 +43,25 @@ router.post('/get-reward', async (req,res)=> {
     const response = await Character.findByPk(Number(player.id))
     await BattleRoom.update({description: 'closed'}, {where:{id: Number(room.id)}})
     return res.json(response)
+})
 
+router.post('/get-mob-reward', async (req,res)=> {
+    // true & false
+    const {playerId, WinOrLoss, itemId} = req.body
+    const player = await Character.findByPk(Number(playerId), {raw:true})
+    const currentBalance = player.balance
+    const currentExp = player.exp
+    if (WinOrLoss) {
+        await Character.update({balance: currentBalance + 20,
+            exp: currentExp + 15}, {where: {id: player.id}})
+        await Inventory.create({item_id: Number(itemId),
+            character_id: Number(player.id)})
+    } else  {
+        await Character.update({balance: currentBalance + 5,
+            exp: currentExp + 5}, {where: {id: player.id}})
+    }
+    const response = await Character.findByPk(Number(player.id))
+    return res.json(response)
 })
 
 // router.get('/watch-battle/:id', async (req,res)=> {

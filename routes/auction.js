@@ -77,7 +77,7 @@ router.post('/buy-item', async (req, res) => {
 })
 
 router.post('/merchant-for-sale', async (req, res) => {
-    const {id} = req.body
+    const {id} = req.body // TODO GROUP
     try {
         const items = await Items.findAll({raw:true})
         const itemsRaw = []
@@ -92,9 +92,60 @@ router.post('/merchant-for-sale', async (req, res) => {
                 }
             )
         }
+        const regexWarrior = /\b[warrior]+\b/gmi
+        const regexAssassin = /\b[assassin]+\b/gmi
+        const regexMonk = /\b[monk]+\b/gmi
+
+        const regexCommon = /\b[common]+\b/gmi
+        const regexUncommon = /\b(uncommon)\b/gmi
+        const regexRare = /\b[rare]+\b/gmi
+        const warrior_common = itemsRaw.filter(({item_name}) => !!item_name.match(regexWarrior))
+            .filter(({grade}) => !!grade.match(regexCommon))
+        const warrior_uncommon = itemsRaw.filter(({item_name}) => !!item_name.match(regexWarrior))
+            .filter(({grade}) => !!grade.match(regexUncommon))
+        const warrior_rare = itemsRaw.filter(({item_name}) => !!item_name.match(regexWarrior))
+            .filter(({grade}) => !!grade.match(regexRare))
+        const assassin_common = itemsRaw.filter(({item_name}) => !!item_name.match(regexAssassin))
+            .filter(({grade}) => !!grade.match(regexCommon))
+        const assassin_uncommon = itemsRaw.filter(({item_name}) => !!item_name.match(regexAssassin))
+            .filter(({grade}) => !!grade.match(regexUncommon))
+        const assassin_rare = itemsRaw.filter(({item_name}) => !!item_name.match(regexAssassin))
+            .filter(({grade}) => !!grade.match(regexRare))
+        const monk_common = itemsRaw.filter(({item_name}) => !!item_name.match(regexMonk))
+            .filter(({grade}) => !!grade.match(regexCommon))
+        const monk_uncommon = itemsRaw.filter(({item_name}) => !!item_name.match(regexMonk))
+            .filter(({grade}) => !!grade.match(regexUncommon))
+        const monk_rare = itemsRaw.filter(({item_name}) => !!item_name.match(regexMonk))
+            .filter(({grade}) => !!grade.match(regexRare))
+        const warrior = {
+            warrior_common,warrior_uncommon,warrior_rare
+        }
+        const assassin = {
+            assassin_common, assassin_uncommon, assassin_rare
+        }
+        const monk = {
+            monk_common, monk_uncommon, monk_rare
+        }
         // const temp = await Items.findAll({})
         console.log(itemsRaw)
-        res.json(itemsRaw)
+        res.json({warrior, assassin, monk})
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+router.post('/merchant-buy-item', async (req,res)=>{
+    const {playerId, itemId} = req.body
+    try {
+        const character = await Character.findByPk(Number(playerId))
+        const item = await Items.findByPk(Number(itemId))
+        if (character.balance >= item.price){
+            await Inventory.create({
+                character_id: Number(character.id),
+                item_id: Number(item.id)
+            })
+            return res.json({message: "transaction is being completed"})
+        } else return res.json({message: "don't enough money"})
     } catch (e) {
         console.log(e)
     }
