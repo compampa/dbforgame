@@ -31,6 +31,15 @@ router.post('/set-to-equip', async (req,res)=> {
         console.log(e)
     }
 })
+router.post('/add-item', async (req,res)=> {
+    console.log(req.body)
+    const {player, item} = req.body
+    try {
+        await Inventory.create({item_id: Number(item.id), character_id: Number(player.id)})
+    } catch (e) {
+        console.log(e)
+    }
+})
 
 
 
