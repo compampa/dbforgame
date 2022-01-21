@@ -35,7 +35,9 @@ router.post('/add-item', async (req,res)=> {
     console.log(req.body)
     const {player, item} = req.body
     try {
-        await Character.update({balance: player.balance - item.price }, {where: {id: player.id}})
+        const character = Character.findByPk(Number(player.id))
+        const currentBalance = character.balance - item.price
+        await Character.update({balance: Number(currentBalance) }, {where: {id: player.id}})
         await Inventory.create({item_id: Number(item.id), character_id: Number(player.id)})
         res.sendStatus(200)
     } catch (e) {
