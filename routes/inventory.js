@@ -36,6 +36,7 @@ router.post('/add-item', async (req,res)=> {
     const {player, item} = req.body
     try {
         await Inventory.create({item_id: Number(item.id), character_id: Number(player.id)})
+        res.sendStatus(200)
     } catch (e) {
         console.log(e)
     }
