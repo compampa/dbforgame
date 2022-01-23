@@ -20,6 +20,10 @@ module.exports = {
             {item_id: 2, character_id: 1, createdAt: new Date(), updatedAt: new Date()},
             {item_id: 3, character_id: 1, createdAt: new Date(), updatedAt: new Date()},
             {item_id: 19, character_id: 1, createdAt: new Date(), updatedAt: new Date()},
+            {item_id: 28, character_id: 1, createdAt: new Date(), updatedAt: new Date()},
+            {item_id: 31, character_id: 1, createdAt: new Date(), updatedAt: new Date()},
+            {item_id: 34, character_id: 1, createdAt: new Date(), updatedAt: new Date()},
+            {item_id: 37, character_id: 1, createdAt: new Date(), updatedAt: new Date()},
             // player 2
             {item_id: 11, character_id: 2, createdAt: new Date(), updatedAt: new Date()},
             {item_id: 14, character_id: 2, createdAt: new Date(), updatedAt: new Date()},

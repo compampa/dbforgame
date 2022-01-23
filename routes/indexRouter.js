@@ -58,7 +58,6 @@ router.get('/get-character-stats/:id', async (req, res) => {
 router.get('/ready-for-fun/:id', async (req, res) => {
     try {
         const tempCharacter = await Character.findOne({where: {user_id: req.params.id}, raw: true})
-        console.log(tempCharacter)
         const equipment = await Equipment.findAll({where: {character_id: tempCharacter.id}, raw: true})
         const itemsId = equipment.map(e => e.item_id)
         const accessories_set = await getAccessorySet(itemsId)
@@ -66,6 +65,7 @@ router.get('/ready-for-fun/:id', async (req, res) => {
         const weapon = await getWeapon(itemsId)
         const total_stats = await getCharacterStatsFull(tempCharacter.id, itemsId)
         const nickName = total_stats.nickname
+        const id = total_stats.id
         const lvl = total_stats.lvl
         const exp = total_stats.exp
         const hp = total_stats.hp
@@ -73,9 +73,13 @@ router.get('/ready-for-fun/:id', async (req, res) => {
         const ap = total_stats.ap
         const playerClass = total_stats.class
         const avatar = total_stats.avatar
+        const obj = {
+            armor_set, accessories_set, weapon, total_stats, nickName,
+            id, lvl, exp, hp, mp, ap, playerClass, avatar
+        }
         return res.json({
             armor_set, accessories_set, weapon, total_stats, nickName,
-            lvl, exp, hp, mp, ap, playerClass, avatar
+            id, lvl, exp, hp, mp, ap, playerClass, avatar, balance: tempCharacter.balance
         })
     } catch (e) {
         console.log(e);
@@ -92,21 +96,72 @@ router.get('/get-mob-current-lvl/:id', async (req, res) => {
     const tempCreep = await Creep.create({class_id: creepClass.id, creep_inventory_id: character.id})
     const items = await Items.findAll({raw: true})
     const drop = items[Math.floor(Math.random() * items.length)]
+    console.log('DROP=============>', drop)
+    const loot = await Items.findByPk(Number(drop.id))
+    console.log('LOOT=============>', loot)
     const money = getRandomNumber((lvl * 5), (lvl * 9))
     const exp = getRandomNumber(lvl, (lvl * 4))
-    const bag = await CreepInventory.create({creep_id: tempCreep.id, item_id: drop.id, cash: money, exp: exp})
+    const reward = await CreepInventory.create({creep_id: tempCreep.id, item_id: drop.id, cash: money, exp: exp})
     // const bag = await Items.findByPk(tempInventory.id, {raw: true})
-    res.json({creepClass, creepStats, bag})
+    res.json({creepClass, creepStats, loot, exp, money})
 })
 
-router.post('/post-battle-room/:id', async (req, res) => {
-    const room = await BattleRoom.create({initial_character_id: req.params.id})
-    res.json({room})
+router.post('/post-battle-room', async (req, res) => {
+    try {
+    // const check = await BattleRoom.findOne({
+    //     where:
+    //         {[Op.or]:[{initial_character_id: req.body.id}, {opponent_id: req.body.id}]},
+    //     raw:true})
+    //
+    // if (!check){
+
+        const room = await BattleRoom.create({initial_character_id: req.body.id, description: 'idle'})
+        // const room = await BattleRoom.findOne({where: {initial_character_id: req.body.id}})
+    res.json({id: room.id})
+    // } else return res.json({message: "player already in battle"})
+    } catch (e) {
+        console.log(e)
+    }
 })
 
-router.get('/get-all-rooms', async (req, res) => {
-    const rooms = await BattleRoom.findAll({raw: true})
+router.get('/enter-exact-room/:id', async (req,res)=>{
+    try {
+        const room = await BattleRoom.findOne({where: {id: Number(req.params.id)}, raw:true})
+        res.json({id: room.id})
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+router.get('/get-active-rooms', async (req, res) => {
+    try {
+    const rooms = await BattleRoom.findAll({where: {description: 'active'},
+        raw: true})
+
     res.json(rooms)
+} catch (e) {
+    console.log(e)
+}
+})
+
+router.get('/get-idle-rooms', async (req, res) => {
+    try {
+    const rooms = await BattleRoom.findAll({where: {description: 'idle'},
+        raw: true})
+    res.json(rooms)
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+router.post('/close-battle-room', async (req, res) => {
+    const { id } = req.body
+    try {
+        await BattleRoom.update({description: 'closed'},{where: {id: Number(id)}})
+        res.json({message: `room ${id} closed`})
+    } catch (e) {
+        console.log(e)
+    }
 })
 
 router.post('/sell-items', async (req, res) => {
@@ -140,11 +195,61 @@ router.post('/set-player-class', async (req, res) => {
         if (!nicknameCheck) {
             const character = await Character.create({user_id, nickname, exp: 0, balance: 0})
             await Classes.create({player_class_id: class_id, character_id: character.id})
-            res.sendStatus(201)
+// CHECK TODO REFACTOR
+
+
+            const equipment = await Equipment.findAll({where: {character_id: character.id}, raw: true})
+            const itemsId = equipment.map(e => e.item_id)
+            const accessories_set = await getAccessorySet(itemsId)
+            const armor_set = await getArmorSet(itemsId)
+            const weapon = await getWeapon(itemsId)
+            const total_stats = await getCharacterStatsFull(character.id, itemsId)
+            const nickName = total_stats.nickname
+            const id = total_stats.id
+            const lvl = total_stats.lvl
+            const exp = total_stats.exp
+            const hp = total_stats.hp
+            const mp = total_stats.mp
+            const ap = total_stats.ap
+            const playerClass = total_stats.class
+            const avatar = total_stats.avatar
+            return res.json({
+                armor_set, accessories_set, weapon, total_stats, nickName,
+                id, lvl, exp, hp, mp, ap, playerClass, avatar, balance: character.balance
+            })
+// CHECK
+            // await Classes.create({player_class_id: class_id, character_id: character.id})
+            // res.sendStatus({})
         }
     } catch (e) {
         console.log(e)
         res.sendStatus(400, 'This nickname is already in use!')
+    }
+})
+
+router.post('/post-random-item', async (req,res)=>{
+    const {id} = req.body
+    try {
+        const randomItemsRaw = await Items.findAll({raw:true})
+        const itemId = getRandomNumber(0, (randomItemsRaw.length -1) )
+        await Inventory.create({character_id: Number(id) , item_id: Number(itemId)})
+        const item = await Items.findByPk(Number(itemId))
+        res.json(item.dataValues)
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+router.post('/remove-from-inventory', async (req, res)=>{
+    const { itemId, characterId } = req.body
+    console.log('req.body ===========================>',req.body)
+    try {
+        const item = await Inventory.findOne({where: {item_id: Number(itemId), character_id: Number(characterId)}, raw: true})
+        await Inventory.destroy({where: {id: Number(item.id)}})
+        res.json({message: 'deleted'})
+    } catch (e) {
+        console.log(e)
+        res.json({message: 'something went wrong'})
     }
 })
 
@@ -338,6 +443,7 @@ async function getCharacterStatsFull(id, arr) {
         totalStat.push(stat)
     }
     const total_stats = {
+        id: character.id,
         nickname: character.nickname,
         class: playerClass.class,
         lvl: currentLevel,

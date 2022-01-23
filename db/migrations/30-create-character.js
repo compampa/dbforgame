@@ -39,7 +39,7 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             exp: {
-                type: Sequelize.STRING
+                type: Sequelize.INTEGER
             },
             createdAt: {
                 allowNull: false,

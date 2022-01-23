@@ -15,42 +15,42 @@ module.exports = {
             {
                 class: 'warrior',
                 description: 'mighty warrior',
-                img: '/image-link',
+                img: 'https://dbforgame.herokuapp.com/static/img/classes/playerClasses/warrior_man.jpg',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
             {
                 class: 'assassin',
                 description: 'freaky assassin',
-                img: '/image-link',
+                img: 'https://dbforgame.herokuapp.com/static/img/classes/playerClasses/assasin_woman.jpg',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
             {
                 class: 'monk',
                 description: 'patient adjascent monk',
-                img: '/image-link',
+                img: 'https://dbforgame.herokuapp.com/static/img/classes/playerClasses/monk_woman.jpg',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
             {
                 class: 'zombie',
                 description: 'horrible brainless zombie',
-                img: '/image-link',
+                img: 'https://dbforgame.herokuapp.com/static/img/classes/creeps/mob-zombie.jpg',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
             {
                 class: 'animal',
                 description: 'wild and dangerous animal',
-                img: '/image-link',
+                img: 'https://dbforgame.herokuapp.com/static/img/classes/creeps/mob-lynx.jpg',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
             {
                 class: 'pagan',
                 description: 'crazy pagan from near village',
-                img: '/image-link',
+                img: 'https://dbforgame.herokuapp.com/static/img/classes/creeps/mob-pagan.jpg',
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
