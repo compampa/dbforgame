@@ -9,7 +9,6 @@ const {
 const {noRawAttributes} = require("sequelize/lib/utils/deprecations");
 
 router.get('/', async (req,res)=>{
-    // const allItems = await Auction.findAll({raw: true})
     const allItems = await getItemsForFront()
     res.json({allItems})
 })
@@ -17,7 +16,6 @@ router.get('/', async (req,res)=>{
 router.post('/place-lot', async (req, res) =>{
     console.log(req.body)
     const { item_id, character_id, price } = req.body.data
-    // const character = Character.findByPk(character_id)
     try {
         const characterInventory = await Inventory.findAll({where: {character_id}, raw: true})
         console.log(characterInventory)
@@ -126,7 +124,6 @@ router.post('/merchant-for-sale', async (req, res) => {
         const monk = {
             monk_common, monk_uncommon, monk_rare
         }
-        // const temp = await Items.findAll({})
         console.log(itemsRaw)
         res.json({warrior, assassin, monk})
     } catch (e) {

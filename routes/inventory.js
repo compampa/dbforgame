@@ -20,10 +20,7 @@ router.post('/set-to-equip', async (req,res)=> {
             const temp = await Items.findByPk(Number(item.id),{raw:true})
             console.log('TEMP', temp)
             await Inventory.destroy({where: {id: temp.id}})
-            //     where:
-            //         {item_id: Number(item.id), character_id: Number(player.id)}
-            //     , raw: true
-            // })
+
             await Equipment.create({item_id: Number(item.id), character_id: Number(player.id)})
             res.json({message: "OK"})
         } else return res.json({message: 'slot is not available'})
@@ -38,7 +35,6 @@ router.post('/add-item', async (req,res)=> {
         const character = Character.findByPk(Number(player.id))
         const currentBalance = character.balance - item.price
         await Character.update({balance: Number(currentBalance) }, {where: {id: Number(player.id)}})
-        console.log('character================>',character)
 
         await Inventory.create({item_id: Number(item.id), character_id: Number(player.id)})
         res.sendStatus(200)

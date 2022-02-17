@@ -8,7 +8,6 @@ const server = http.createServer(app)
 
 const io = new Server(server, {cors: {origin: true}})
 
-// const players = []
 let storage = []
 let arr = []
 let chatPlayers = []
@@ -41,7 +40,6 @@ io.on('connection', socket => {
                 const currentRoom2 = await BattleRoom.findOne({where: {id: Number(room.id)}})
                 io.to(room.id).emit('join-room', {arr, currentRoom2})
             }
-            // await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
         } catch (e) {
             console.log(e)
 
@@ -51,34 +49,16 @@ io.on('connection', socket => {
         try {
             socket.join(Number(roomId))
             const currentRoom = await BattleRoom.findOne({where: {id: Number(roomId)}})
-            console.log('============================================')
-            console.log('room============>',currentRoom)
-            console.log('============================================')
 
             const initial_character = arr.find(e => {
                 return (e.player.id === currentRoom.initial_character_id)
             })
-            console.log('============================================')
-            console.log('initial_character============>',initial_character)
-            console.log('============================================')
             const opponent = arr.find(e => {
                 return (e.player.id === currentRoom.opponent_id)
             })
-            console.log('============================================')
-            console.log('opponent============>',opponent)
-            console.log('============================================')
             socket.to(roomId).emit('join-room-watcher',
                 {current_room: currentRoom.id, initial_character, opponent})
-            // if (Number(currentRoom.initial_character_id) === Number(player.id)) {
-            //     arr.push({player})
-            //     io.to(room.id).emit('join-room', arr)
-            // } else {
-            //     arr.push({player, battlePlayer})
-            //     await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
-            //     const currentRoom2 = await BattleRoom.findOne({where: {id: Number(room.id)}})
-            //     io.to(room.id).emit('join-room', {arr, currentRoom2})
-            // }
-            // await BattleRoom.update({opponent_id: Number(player.id), description: 'active'}, {where: {id: room.id}})
+
         } catch (e) {
             console.log(e)
 

@@ -7,6 +7,5 @@ router.post('/login', indexController.login)
 router.post('/logout', indexController.logout)
 
 router.get('/refresh', indexController.refresh)
-// router.get('/getall', authMiddleware, indexController.getAllCategories) //TODO --> authmiddleware
 
 module.exports = router

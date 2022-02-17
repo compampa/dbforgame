@@ -96,29 +96,18 @@ router.get('/get-mob-current-lvl/:id', async (req, res) => {
     const tempCreep = await Creep.create({class_id: creepClass.id, creep_inventory_id: character.id})
     const items = await Items.findAll({raw: true})
     const drop = items[Math.floor(Math.random() * items.length)]
-    console.log('DROP=============>', drop)
     const loot = await Items.findByPk(Number(drop.id))
-    console.log('LOOT=============>', loot)
     const money = getRandomNumber((lvl * 5), (lvl * 9))
     const exp = getRandomNumber(lvl, (lvl * 4))
     const reward = await CreepInventory.create({creep_id: tempCreep.id, item_id: drop.id, cash: money, exp: exp})
-    // const bag = await Items.findByPk(tempInventory.id, {raw: true})
     res.json({creepClass, creepStats, loot, exp, money})
 })
 
 router.post('/post-battle-room', async (req, res) => {
     try {
-    // const check = await BattleRoom.findOne({
-    //     where:
-    //         {[Op.or]:[{initial_character_id: req.body.id}, {opponent_id: req.body.id}]},
-    //     raw:true})
-    //
-    // if (!check){
 
         const room = await BattleRoom.create({initial_character_id: req.body.id, description: 'idle'})
-        // const room = await BattleRoom.findOne({where: {initial_character_id: req.body.id}})
     res.json({id: room.id})
-    // } else return res.json({message: "player already in battle"})
     } catch (e) {
         console.log(e)
     }
@@ -217,9 +206,6 @@ router.post('/set-player-class', async (req, res) => {
                 armor_set, accessories_set, weapon, total_stats, nickName,
                 id, lvl, exp, hp, mp, ap, playerClass, avatar, balance: character.balance
             })
-// CHECK
-            // await Classes.create({player_class_id: class_id, character_id: character.id})
-            // res.sendStatus({})
         }
     } catch (e) {
         console.log(e)
@@ -242,7 +228,6 @@ router.post('/post-random-item', async (req,res)=>{
 
 router.post('/remove-from-inventory', async (req, res)=>{
     const { itemId, characterId } = req.body
-    console.log('req.body ===========================>',req.body)
     try {
         const item = await Inventory.findOne({where: {item_id: Number(itemId), character_id: Number(characterId)}, raw: true})
         await Inventory.destroy({where: {id: Number(item.id)}})
@@ -254,15 +239,11 @@ router.post('/remove-from-inventory', async (req, res)=>{
 })
 
 
-function getRandomNumber(min, max) { // min and max included
+function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-// router.get('/mob-for-battle/:id', async (req, res) => {
-//     const character = await Character.findByPk(req.params.id)
-//     const lvl = getLVL(character)
-//
-// })
+
 
 async function getWeapon(arr) {
     const weapRaw = await Items.findAll({
@@ -392,8 +373,6 @@ async function getCharacterStats(id) {
     const character = await Character.findByPk(id, {raw: true})
     const playerClassId = await Classes.findOne({where: {character_id: character.id}, raw: true})
     const playerClass = await PlayerClass.findOne({where: {id: playerClassId.player_class_id}, raw: true})
-    console.log(playerClass);
-    // LEVEL!
     const level = await LEVELS.findAll({where: {exp: {[Op.gt]: Number(character.exp)}}, raw: true})
     const currentLevel = level[0].value - 1
     const playerStats = await CurrentCondition.findOne({
@@ -471,15 +450,13 @@ async function getCharacterStatsFull(id, arr) {
 }
 
 async function getInventory(id) {
-    const thing = await Inventory.findAll({where: {character_id: id}, raw: true}) // change id to req.params
-    // getting all items id from inventory
+    const thing = await Inventory.findAll({where: {character_id: id}, raw: true})
     const arr_items_id = thing.map(e => e.item_id)
     let result = []
     for (let i = 0; i < arr_items_id.length; i += 1) {
         const item = await Items.findOne({where: {id: arr_items_id[i]}, raw: true})
         result.push(item)
     }
-    // getting meta info for items in inventory
     const grades = result.map(e => e.grade_id)
     const gradesTitle = []
     for (let i = 0; i < grades.length; i += 1) {

@@ -11,7 +11,6 @@ router.post('/en', async (req, res) =>{
     const {body_part, type_of_action, player_id, db_room} = req.body
     try {
         const phrases = await hitens.findAll({where: {body_part, type_of_action}, raw: true})
-        //{where: {body_part, type_of_action}, raw: true}
         const phrase = phrases[getRandomNumber(0, phrases.length - 1)]
         const battleLog = await BattleLog.create({
             battle_room_id: Number(db_room.id),
@@ -28,7 +27,6 @@ router.post('/en', async (req, res) =>{
 })
 
 router.post('/get-reward', async (req,res)=> {
-                        // true & false
     const {playerId, WinOrLoss, room} = req.body
     const player = await Character.findByPk(Number(playerId), {raw:true})
     const currentBalance = player.balance
@@ -46,7 +44,6 @@ router.post('/get-reward', async (req,res)=> {
 })
 
 router.post('/get-mob-reward', async (req,res)=> {
-    // true & false
     const {playerId, WinOrLoss, itemId} = req.body
     const player = await Character.findByPk(Number(playerId), {raw:true})
     const currentBalance = player.balance
@@ -61,21 +58,10 @@ router.post('/get-mob-reward', async (req,res)=> {
             exp: currentExp + 5}, {where: {id: player.id}})
     }
     const response = await Character.findByPk(Number(player.id))
-    console.log('response ===============>',response);
     return res.json(response)
 })
 
-// router.get('/watch-battle/:id', async (req,res)=> {
-//     const { id } = req.params
-//     try {
-//         const room = BattleRoom.findByPk(Number(id))
-//         return res.json(room)
-//     } catch (e) {
-//         console.log(e)
-//     }
-// })
 
-// router()
 
 module.exports = router
 
